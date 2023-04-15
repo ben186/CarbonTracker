@@ -9,8 +9,6 @@ import {
   DefaultTheme,
   NavigationContainer,
 } from "@react-navigation/native"
-import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { StackScreenProps } from "@react-navigation/stack"
 import { observer } from "mobx-react-lite"
 import React from "react"
 import { useColorScheme } from "react-native"
@@ -19,6 +17,7 @@ import {
   WelcomeScreen,
 } from "../screens"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
+import { createBottomTabNavigator, BottomTabScreenProps } from "@react-navigation/bottom-tabs"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -33,7 +32,7 @@ import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
  *   https://reactnavigation.org/docs/typescript#type-checking-the-navigator
  *   https://reactnavigation.org/docs/typescript/#organizing-types
  */
-export type AppStackParamList = {
+export type AppBottomTabParamList = {
   Welcome: undefined
   // 🔥 Your screens go here
 }
@@ -44,19 +43,19 @@ export type AppStackParamList = {
  */
 const exitRoutes = Config.exitRoutes
 
-export type AppStackScreenProps<T extends keyof AppStackParamList> = StackScreenProps<
-  AppStackParamList,
+export type AppBottomTabScreenProps<T extends keyof AppBottomTabParamList> = BottomTabScreenProps<
+  AppBottomTabParamList,
   T
 >
 
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
-const Stack = createNativeStackNavigator<AppStackParamList>()
+const Tab = createBottomTabNavigator<AppBottomTabParamList>()
 
-const AppStack = observer(function AppStack() {
+const AppBottomTab = observer(function AppBottomTab() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Welcome" component={WelcomeScreen} />
-    </Stack.Navigator>
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Screen name="Welcome" component={WelcomeScreen} />
+    </Tab.Navigator>
   )
 })
 
@@ -73,7 +72,7 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
       theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
       {...props}
     >
-      <AppStack />
+      <AppBottomTab />
     </NavigationContainer>
   )
 })
