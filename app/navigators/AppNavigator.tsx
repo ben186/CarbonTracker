@@ -32,8 +32,6 @@ import { HomeNavigator } from "./HomeNavigator"
  *   https://reactnavigation.org/docs/typescript/#organizing-types
  */
 export type AppBottomTabParamList = {
-  Welcome: undefined
-  // 🔥 Your screens go here
   HomeNavigator: undefined,
   StatsNavigator: undefined,
   SettingsNavigator: undefined
