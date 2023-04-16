@@ -17,6 +17,8 @@ import Config from "../config"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { createBottomTabNavigator, BottomTabScreenProps } from "@react-navigation/bottom-tabs"
 import { HomeNavigator } from "./HomeNavigator"
+import { StatsNavigator } from "./StatsNavigator"
+import { SettingsNavigator } from "./SettingsNavigator"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -62,6 +64,28 @@ const AppBottomTab = observer(function AppBottomTab() {
             focused ?
             <Ionicons name="home" color={color} size={size} /> :
             <Ionicons name="home-outline" color={color} size={size} />
+          )
+        }}
+      />
+      <Tab.Screen 
+        name="StatsNavigator" 
+        component={StatsNavigator}
+        options={{
+          tabBarIcon: ({ focused, color, size}) => (
+            focused ?
+            <Ionicons name="stats-chart" color={color} size={size} /> :
+            <Ionicons name="stats-chart-outline" color={color} size={size} />
+          )
+        }}
+      />
+      <Tab.Screen 
+        name="SettingsNavigator" 
+        component={SettingsNavigator}
+        options={{
+          tabBarIcon: ({ focused, color, size}) => (
+            focused ?
+            <Ionicons name="settings" color={color} size={size} /> :
+            <Ionicons name="settings-outline" color={color} size={size} />
           )
         }}
       />
