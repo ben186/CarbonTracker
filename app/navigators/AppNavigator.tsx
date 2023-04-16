@@ -12,12 +12,11 @@ import {
 import { observer } from "mobx-react-lite"
 import React from "react"
 import { useColorScheme } from "react-native"
+import { Ionicons } from "@expo/vector-icons"
 import Config from "../config"
-import {
-  WelcomeScreen,
-} from "../screens"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { createBottomTabNavigator, BottomTabScreenProps } from "@react-navigation/bottom-tabs"
+import { HomeNavigator } from "./HomeNavigator"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -35,6 +34,9 @@ import { createBottomTabNavigator, BottomTabScreenProps } from "@react-navigatio
 export type AppBottomTabParamList = {
   Welcome: undefined
   // 🔥 Your screens go here
+  HomeNavigator: undefined,
+  StatsNavigator: undefined,
+  SettingsNavigator: undefined
 }
 
 /**
@@ -53,8 +55,18 @@ const Tab = createBottomTabNavigator<AppBottomTabParamList>()
 
 const AppBottomTab = observer(function AppBottomTab() {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
-      <Tab.Screen name="Welcome" component={WelcomeScreen} />
+    <Tab.Navigator screenOptions={{ headerShown: false, tabBarShowLabel: false }}>
+      <Tab.Screen 
+        name="HomeNavigator" 
+        component={HomeNavigator}
+        options={{
+          tabBarIcon: ({ focused, color, size}) => (
+            focused ?
+            <Ionicons name="home" color={color} size={size} /> :
+            <Ionicons name="home-outline" color={color} size={size} />
+          )
+        }}
+      />
     </Tab.Navigator>
   )
 })
