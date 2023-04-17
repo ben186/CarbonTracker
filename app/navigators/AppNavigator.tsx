@@ -7,11 +7,11 @@
 import {
   DarkTheme,
   DefaultTheme,
-  NavigationContainer,
+  NavigationContainer
 } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
 import React from "react"
-import { useColorScheme } from "react-native"
+import { useColorScheme, StatusBar } from "react-native"
 import { Ionicons } from "@expo/vector-icons"
 import Config from "../config"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
@@ -100,13 +100,18 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
 
   useBackButtonHandler((routeName) => exitRoutes.includes(routeName))
 
+  StatusBar.setBarStyle(colorScheme === "dark" ? "light-content" : "dark-content")
+
   return (
-    <NavigationContainer
-      ref={navigationRef}
-      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-      {...props}
-    >
-      <AppBottomTab />
-    </NavigationContainer>
+    <>
+      <StatusBar />
+      <NavigationContainer
+        ref={navigationRef}
+        theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        {...props}
+      >
+        <AppBottomTab />
+      </NavigationContainer>
+    </>
   )
 })
