@@ -3,7 +3,7 @@
   "displayName": "CarbonTracker",
   "expo": {
     "name": "CarbonTracker",
-    "slug": "CarbonTracker",
+    "slug": "carbontracker",
     "scheme": "carbontracker",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -17,7 +17,9 @@
       "fallbackToCacheTimeout": 0
     },
     "jsEngine": "hermes",
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "android": {
       "icon": "./assets/images/app-icon-android-legacy.png",
       "package": "com.carbontracker",
@@ -49,6 +51,12 @@
         "resizeMode": "contain",
         "backgroundColor": "#191015"
       }
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a69af772-f08c-47b1-b359-7c7568f82322"
+      }
+    },
+    "owner": "anymouscodec"
   }
 }
