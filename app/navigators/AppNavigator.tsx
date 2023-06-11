@@ -5,13 +5,11 @@
  * and a "main" flow which the user will use once logged in.
  */
 import {
-  DarkTheme,
-  DefaultTheme,
-  NavigationContainer
+  NavigationContainer,
+  useFocusEffect
 } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
-import React from "react"
-import { useColorScheme, StatusBar } from "react-native"
+import React, { useCallback } from "react"
 import { Ionicons } from "@expo/vector-icons"
 import Config from "../config"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
@@ -19,6 +17,7 @@ import { createBottomTabNavigator, BottomTabScreenProps } from "@react-navigatio
 import { HomeNavigator } from "./HomeNavigator"
 import { StatsNavigator } from "./StatsNavigator"
 import { SettingsNavigator } from "./SettingsNavigator"
+import { setStatusBarBackgroundColor, setStatusBarStyle, setStatusBarTranslucent } from "expo-status-bar"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -54,8 +53,18 @@ export type AppBottomTabScreenProps<T extends keyof AppBottomTabParamList> = Bot
 const Tab = createBottomTabNavigator<AppBottomTabParamList>()
 
 const AppBottomTab = observer(function AppBottomTab() {
+
+  // Force light mode for now
+  useFocusEffect(
+    useCallback(() => {
+      setStatusBarStyle("dark")
+      setStatusBarBackgroundColor("white", true)
+      setStatusBarTranslucent(true)
+    }, [])
+  )
+
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false, tabBarShowLabel: false }}>
+    <Tab.Navigator screenOptions={{ headerShown: false, tabBarShowLabel: false, tabBarActiveTintColor: "blue" }}>
       <Tab.Screen 
         name="HomeNavigator" 
         component={HomeNavigator}
@@ -96,18 +105,13 @@ const AppBottomTab = observer(function AppBottomTab() {
 interface NavigationProps extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
 
 export const AppNavigator = observer(function AppNavigator(props: NavigationProps) {
-  const colorScheme = useColorScheme()
 
   useBackButtonHandler((routeName) => exitRoutes.includes(routeName))
 
-  StatusBar.setBarStyle(colorScheme === "dark" ? "light-content" : "dark-content")
-
   return (
     <>
-      <StatusBar />
       <NavigationContainer
         ref={navigationRef}
-        theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
         {...props}
       >
         <AppBottomTab />
