@@ -19,7 +19,7 @@ export const EmissionSelectionScreen: FC<EmissionSelectionScreenProps> = observe
               style={$category}
               key={c.category}
             >
-              <Ionicons style={$icon} name={c.icon as keyof typeof Ionicons.glyphMap} size={32} />
+              <Ionicons style={$icon} name={c.icon} size={32} />
               <Text style={$label}>{c.category.charAt(0).toUpperCase() + c.category.slice(1)}</Text>
             </Pressable>
           ))}

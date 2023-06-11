@@ -36,7 +36,7 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen({ na
   
   const renderItem = ({item}: {item: Emission}) => (
     <TouchableOpacity onPress={() => navigation.navigate("AddEmission", { id: item.id })} style={$item}>
-      <Ionicons style={$iconStyle} name={EMISSIONS.find(c => c.category === item.emissionType).icon as keyof typeof Ionicons.glyphMap} size={32} />
+      <Ionicons style={$iconStyle} name={EMISSIONS.find(c => c.category === item.emissionType).icon} size={32} />
       <View style={$label}>
         <Text style={$text}>{item.emissionType.toUpperCase()}</Text>
         <Text>{(item.emission * EMISSIONS.find(c => c.category === item.emissionType).factor).toLocaleString() + " gCO2e"}</Text>
