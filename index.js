@@ -2,6 +2,7 @@
 // If you use Expo (`yarn expo:start`), the entry point is ./App.js instead.
 // Both do essentially the same thing.
 
+import { registerRootComponent } from "expo"
 import App from "./app/app.tsx"
 import React from "react"
 import { AppRegistry } from "react-native"
@@ -11,5 +12,5 @@ function IgniteApp() {
   return <App hideSplashScreen={RNBootSplash.hide} />
 }
 
-AppRegistry.registerComponent("CarbonTracker", () => IgniteApp)
+registerRootComponent(IgniteApp)
 export default App
