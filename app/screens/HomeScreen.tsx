@@ -9,9 +9,9 @@ import * as Crypto from "expo-crypto"
 import { EMISSIONS } from "app/constants"
 
 function getRandomDate(from: Date, to: Date) {
-  const fromTime = from.getTime();
-  const toTime = to.getTime();
-  return new Date(fromTime + Math.random() * (toTime - fromTime));
+  const fromTime = from.getTime()
+  const toTime = to.getTime()
+  return new Date(fromTime + Math.random() * (toTime - fromTime))
 }
 
 interface HomeScreenProps extends HomeNavigatorScreenProps<"Home"> {}
@@ -24,11 +24,11 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen({ na
 
   // Add random emissions
   // if (emissionStore.emissions.length < 10) {
-  //   for (let i = 0; i < 50; i++) {
+  //   for (let i = 0; i < 100; i++) {
   //     emissionStore.addEmission(EmissionModel.create({
   //       id: Crypto.randomUUID(),
-  //       timestamp: getRandomDate(new Date('2023-5-01T01:57:45.271Z'), new Date('2023-05-28T01:57:45.271Z')).valueOf(),
-  //       emissionType: CATEGORIES.map(v => v.value)[Math.floor(Math.random() * 4)],
+  //       timestamp: getRandomDate(new Date('2023-5-01T01:57:45.271Z'), new Date()).valueOf(),
+  //       emissionType: EMISSIONS.map(x => x.category)[Math.floor(Math.random() * 4)],
   //       emission: Math.floor(Math.random() * (2000 - 2 + 1) + 2)
   //     }))
   //   }
