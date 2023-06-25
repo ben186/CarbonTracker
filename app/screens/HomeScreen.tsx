@@ -32,7 +32,7 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen({ na
   //       emission: Math.floor(Math.random() * (2000 - 2 + 1) + 2)
   //     }))
   //   }
-  // }
+  // } 
   
   const renderItem = ({item}: {item: Emission}) => (
     <TouchableOpacity onPress={() => navigation.navigate("AddEmission", { id: item.id })} style={$item}>
