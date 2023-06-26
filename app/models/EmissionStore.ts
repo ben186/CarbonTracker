@@ -44,6 +44,12 @@ export const EmissionStoreModel = types
       }
 
       return emissionData
+    },
+    get nonRecurringEmissionLength() {
+      return store.emissions.reduce((count, em) => count + (em.recurrence ? 0 : 1), 0)
+    },
+    get recurringEmissionLength() {
+      return store.emissions.reduce((count, em) => count + (em.recurrence ? 1 : 0), 0)
     }
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((store) => ({
