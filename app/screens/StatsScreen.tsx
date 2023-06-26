@@ -120,6 +120,7 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
       <View style={$chart}>
         <SkiaChart ref={pieRef} />
       </View>
+      {/* Have to add empty component for elevation to work for some reason */ }
       <Text></Text>
     </ScrollView>
   )
