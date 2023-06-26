@@ -42,28 +42,24 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
 
   const pieRef = useRef<HTMLElement | null>(null)
   const pieOption: EChartsOption = {
-    grid: {
-      left: "center",
-      top: "center"
-    },
     series: [
       {
         type: "pie",
         data: [
           {
-            value: 335,
+            value: 0,
             name: "Car"
           },
           {
-            value: 234,
+            value: 0,
             name: "Electricity"
           },
           {
-            value: 1001,
+            value: 0,
             name: "Food"
           },
           {
-            value: 675,
+            value: 0,
             name: "Custom"
           }
         ]
@@ -124,14 +120,15 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
       <View style={$chart}>
         <SkiaChart ref={pieRef} />
       </View>
+      <Text></Text>
     </ScrollView>
   )
 })
 
 const $root: ViewStyle = {
   flex: 1,
-  flexDirection: "column",
-  paddingHorizontal: "2%"
+  paddingHorizontal: "2%",
+  backgroundColor: colors.background
 }
 
 const $label: TextStyle = {
@@ -147,6 +144,5 @@ const $chart: ViewStyle = {
   width: "100%",
   marginTop: "1.5%",
   backgroundColor: colors.palette.neutral100,
-  borderBottomWidth: 1,
-  borderColor: colors.border
+  elevation: 4
 }

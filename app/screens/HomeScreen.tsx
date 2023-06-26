@@ -50,15 +50,18 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen({ na
 
   return (
     <View style={$root}>
-      {emissionStore.emissions.length === 0 && <Text style={$empty}>No emissions recorded 🍃</Text>}
+      {emissionStore.nonRecurringEmissionLength === 0 && <Text style={$empty}>No emissions recorded 🍃</Text>}
       <SectionList
         style={$list}
         sections={emissionStore.listByDay}
         renderItem={renderItem}
         renderSectionHeader={renderHeader}
       />
+      <Pressable style={$recurringEmission} onPress={() => navigation.navigate("RecurringEmission")}>
+        <Ionicons style={$recurringEmissionIcon} name="timer-outline" color={"white"} size={36} />
+      </Pressable>
       <Pressable style={$addEmission} onPress={() => navigation.navigate("EmissionSelection")}>
-        <Ionicons style={$iconAddStyle} name="add" color={"white"} size={36} />
+        <Ionicons style={$addIcon} name="add" color={"white"} size={36} />
       </Pressable>
     </View>
   )
@@ -88,7 +91,7 @@ const $headerText: TextStyle = {
 
 const $list: ViewStyle = {
   flex: 1,
-  alignSelf: "stretch"
+  alignSelf: "stretch",
 }
 
 const $iconStyle: ViewStyle = {
@@ -103,10 +106,9 @@ const $item: ViewStyle = {
   padding: 10,
   backgroundColor: colors.palette.neutral100,
   marginVertical: "1%",
-  borderBottomWidth: 1,
-  borderColor: colors.separator,
   width: "100%",
-  minHeight: 35
+  minHeight: 35,
+  elevation: 4
 }
 
 const $text: TextStyle = {
@@ -118,7 +120,23 @@ const $label: ViewStyle = {
   justifyContent: "space-between"
 }
 
-const $iconAddStyle: ViewStyle = {
+const $recurringEmissionIcon: ViewStyle = {
+  alignSelf: "center"
+}
+
+const $recurringEmission: ViewStyle = {
+  position: "absolute",
+  height: 55,
+  width: 55,
+  justifyContent: "center",
+  alignItems: "center",
+  backgroundColor: "blue",
+  borderRadius: 50,
+  bottom: 85,
+  right: 20
+}
+
+const $addIcon: ViewStyle = {
   alignSelf: "center"
 }
 
