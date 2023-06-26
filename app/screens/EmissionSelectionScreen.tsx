@@ -55,7 +55,6 @@ const $category: ViewStyle = {
   flexDirection: "row",
   backgroundColor: "#ffffff",
   alignItems: "center",
-  borderBottomWidth: 1,
-  borderColor: colors.border,
+  elevation: 4,
   zIndex: 1
 }
