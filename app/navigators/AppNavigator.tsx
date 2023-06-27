@@ -93,8 +93,8 @@ const AppBottomTab = observer(function AppBottomTab() {
         options={{
           tabBarIcon: ({ focused, color, size}) => (
             focused ?
-            <Ionicons name="settings" color={color} size={size} /> :
-            <Ionicons name="settings-outline" color={color} size={size} />
+            <Ionicons name="information-circle" color={color} size={size} /> :
+            <Ionicons name="information-circle-outline" color={color} size={size} />
           )
         }}
       />
