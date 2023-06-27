@@ -14,7 +14,7 @@ export type StatsNavigatorScreenProps<T extends keyof StatsNavigatorParamList> =
 const Stack = createStackNavigator<StatsNavigatorParamList>()
 export const StatsNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ cardStyle: { backgroundColor: "transparent" }, headerShown: true }}>
+    <Stack.Navigator screenOptions={{ cardStyle: { backgroundColor: "transparent" }, headerShown: false }}>
       <Stack.Screen name="Stats" component={StatsScreen} />
     </Stack.Navigator>
   )

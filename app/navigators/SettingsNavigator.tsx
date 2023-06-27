@@ -14,7 +14,7 @@ export type SettingsNavigatorScreenProps<T extends keyof SettingsNavigatorParamL
 const Stack = createStackNavigator<SettingsNavigatorParamList>()
 export const SettingsNavigator = () => {
   return (
-    <Stack.Navigator screenOptions={{ cardStyle: { backgroundColor: "transparent" }, headerShown: true }}>
+    <Stack.Navigator screenOptions={{ cardStyle: { backgroundColor: "transparent" }, headerShown: false }}>
       <Stack.Screen name="Settings" component={SettingsScreen} />
     </Stack.Navigator>
   )

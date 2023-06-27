@@ -7,6 +7,7 @@ import { Emission, EmissionModel, useStores } from "app/models"
 import { Ionicons } from "@expo/vector-icons"
 import * as Crypto from "expo-crypto"
 import { EMISSIONS } from "app/constants"
+import { SafeAreaView } from "react-native-safe-area-context"
 
 function getRandomDate(from: Date, to: Date) {
   const fromTime = from.getTime()
@@ -49,7 +50,7 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen({ na
   )
 
   return (
-    <View style={$root}>
+    <SafeAreaView style={$root} mode="margin">
       {emissionStore.nonRecurringEmissionLength === 0 && <Text style={$empty}>No emissions recorded 🍃</Text>}
       <SectionList
         style={$list}
@@ -63,7 +64,7 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen({ na
       <Pressable style={$addEmission} onPress={() => navigation.navigate("EmissionSelection")}>
         <Ionicons style={$addIcon} name="add" color={"white"} size={36} />
       </Pressable>
-    </View>
+    </SafeAreaView>
   )
 })
 
@@ -72,7 +73,8 @@ const $root: ViewStyle = {
   justifyContent: "center",
   alignItems: "center",
   backgroundColor: colors.background,
-  paddingHorizontal: "2%"
+  paddingHorizontal: "2%",
+  width: "100%"
 }
 
 const $empty: TextStyle = {
@@ -91,7 +93,7 @@ const $headerText: TextStyle = {
 
 const $list: ViewStyle = {
   flex: 1,
-  alignSelf: "stretch",
+  alignSelf: "stretch"
 }
 
 const $iconStyle: ViewStyle = {

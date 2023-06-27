@@ -18,7 +18,7 @@ const Stack = createStackNavigator<HomeNavigatorParamList>()
 export const HomeNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ cardStyle: { backgroundColor: "transparent" }, headerShown: true }}>
-      <Stack.Screen name="Home" component={HomeScreen} options={{headerTitle: "Emissions"}} />
+      <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
       <Stack.Screen name="EmissionSelection" component={EmissionSelectionScreen} options={{headerTitle: "Select Your Emission"}} />
       <Stack.Screen name="AddEmission" component={AddEmissionScreen} options={{headerTitle: "Add Emission"}} />
       <Stack.Screen name="RecurringEmission" component={RecurringEmissionScreen} options={{headerTitle: "Recurring Emission"}} />

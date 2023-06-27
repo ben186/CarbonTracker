@@ -12,6 +12,7 @@ import { useStores } from "app/models"
 import { getDay } from "date-fns"
 import { EMISSIONS } from "app/constants"
 import { colors } from "app/theme"
+import { SafeAreaView } from "react-native-safe-area-context"
 
 echarts.use([SVGRenderer, BarChart, PieChart, GridComponent])
 
@@ -111,18 +112,20 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
   }, [])
   
   return (
-    <ScrollView style={$root}>
-      <Text style={$label}>Top Emission Days</Text>
-      <View style={$chart}>
-        <SkiaChart ref={barRef} />
-      </View>
-      <Text style={$label}>Top Emission Types</Text>
-      <View style={$chart}>
-        <SkiaChart ref={pieRef} />
-      </View>
-      {/* Have to add empty component for elevation to work for some reason */ }
-      <Text></Text>
-    </ScrollView>
+    <SafeAreaView style={$root} mode="margin">
+      <ScrollView>
+        <Text style={$label}>Top Emission Days</Text>
+        <View style={$chart}>
+          <SkiaChart ref={barRef} />
+        </View>
+        <Text style={$label}>Top Emission Types</Text>
+        <View style={$chart}>
+          <SkiaChart ref={pieRef} />
+        </View>
+        {/* Have to add empty component for elevation to work for some reason */ }
+        <Text></Text>
+      </ScrollView>
+    </SafeAreaView>
   )
 })
 
