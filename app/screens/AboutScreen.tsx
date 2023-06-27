@@ -1,16 +1,16 @@
 import React, { FC } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle } from "react-native"
-import { SettingsNavigatorScreenProps } from "app/navigators"
+import { AppBottomTabScreenProps } from "app/navigators"
 import { Text } from "app/components"
 import { SafeAreaView } from "react-native-safe-area-context"
 
-interface SettingsScreenProp extends SettingsNavigatorScreenProps<"Settings"> {}
+interface AboutScreenProp extends AppBottomTabScreenProps<"About"> {}
 
-export const SettingsScreen: FC<SettingsScreenProp> = observer(function SettingsScreen() {
+export const AboutScreen: FC<AboutScreenProp> = observer(function AboutScreen() {
   return (
     <SafeAreaView style={$root} mode="margin">
-      <Text>Settings</Text>
+      <Text>About</Text>
     </SafeAreaView>
   )
 })

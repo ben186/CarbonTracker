@@ -16,8 +16,8 @@ import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { createBottomTabNavigator, BottomTabScreenProps } from "@react-navigation/bottom-tabs"
 import { HomeNavigator } from "./HomeNavigator"
 import { StatsNavigator } from "./StatsNavigator"
-import { SettingsNavigator } from "./SettingsNavigator"
 import { setStatusBarBackgroundColor, setStatusBarStyle, setStatusBarTranslucent } from "expo-status-bar"
+import { AboutScreen } from "app/screens"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -35,7 +35,7 @@ import { setStatusBarBackgroundColor, setStatusBarStyle, setStatusBarTranslucent
 export type AppBottomTabParamList = {
   HomeNavigator: undefined,
   StatsNavigator: undefined,
-  SettingsNavigator: undefined
+  About: undefined
 }
 
 /**
@@ -88,8 +88,8 @@ const AppBottomTab = observer(function AppBottomTab() {
         }}
       />
       <Tab.Screen 
-        name="SettingsNavigator" 
-        component={SettingsNavigator}
+        name="About" 
+        component={AboutScreen}
         options={{
           tabBarIcon: ({ focused, color, size}) => (
             focused ?
