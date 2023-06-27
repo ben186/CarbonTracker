@@ -48,7 +48,7 @@ export const AddEmissionScreen: FC<AddEmissionScreenProps> = observer(function A
         text: "Yes",
         onPress: () => { 
           emissionStore.deleteEmission(id)
-          navigation.navigate("Home")
+          navigation.goBack()
         }
       },
     ])
@@ -65,7 +65,7 @@ export const AddEmissionScreen: FC<AddEmissionScreenProps> = observer(function A
     })
     emissionStore.updateEmission(updatedEmission)
 
-    navigation.navigate("Home")
+    navigation.goBack()
   }
 
   const submitEmission = () => {

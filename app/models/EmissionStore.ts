@@ -17,7 +17,13 @@ export const EmissionStoreModel = types
       const index = store.emissions.findIndex(em => em.id === id)
       return store.emissions[index]
     },
-    get listByDay(): { title: string, data: Emission[] }[] {
+    get listRecurrenceChronogically() {
+      return store.emissions
+        .slice()
+        .sort((a, b) => b.timestamp - a.timestamp)
+        .filter(e => e.recurrence !== undefined)
+    },
+    get listNonRecurrenceByDay(): { title: string, data: Emission[] }[] {
       let emissionData = []
 
       if (store.emissions.length !== 0) {
