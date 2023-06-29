@@ -47,7 +47,7 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen({ na
   )
 
   const renderHeader = ({section}: { section: { title: string }}) => (
-    <Text style={$headerText}>{section.title}</Text>
+    <Text style={$headerText}>{section.title.slice(-5)}</Text>
   )
 
   return (
