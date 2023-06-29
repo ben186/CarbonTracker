@@ -23,7 +23,7 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
   const barOption: EChartsOption = {
     grid: {
       left: "center",
-      containLabel: false
+      containLabel: true
     },
     xAxis: {
       type: "category",
@@ -31,7 +31,10 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
     },
     yAxis: {
       type: "value",
-      show: false
+      axisLabel: {
+        formatter: (value) => value.toPrecision(3)
+      },
+      show: true
     },
     series: [
       {
