@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import React, { FC, useMemo } from "react"
 import { observer } from "mobx-react-lite"
 import { Text, TextStyle, View, ViewStyle, TouchableOpacity, Pressable, SectionList } from "react-native"
 import { HomeNavigatorScreenProps } from "app/navigators"
@@ -8,6 +8,7 @@ import { Ionicons } from "@expo/vector-icons"
 import * as Crypto from "expo-crypto"
 import { EMISSIONS } from "app/constants"
 import { SafeAreaView } from "react-native-safe-area-context"
+import { MotiPressable } from "moti/interactions"
 
 function getRandomDate(from: Date, to: Date) {
   const fromTime = from.getTime()
@@ -58,12 +59,44 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen({ na
         renderItem={renderItem}
         renderSectionHeader={renderHeader}
       />
-      <Pressable style={$recurringEmission} onPress={() => navigation.navigate("RecurringEmission")}>
+      <MotiPressable 
+        style={$recurringEmission} 
+        onPress={() => navigation.navigate("RecurringEmission")}
+        animate={
+          useMemo(() => ({ pressed }) => {  
+            "worklet"
+
+            return {
+              scale: pressed ? 0.9 : 1
+            }
+          }, [])
+        }
+        transition={{
+          type: "spring",
+          damping: 5
+        }}
+      >
         <Ionicons style={$recurringEmissionIcon} name="timer-outline" color={"white"} size={36} />
-      </Pressable>
-      <Pressable style={$addEmission} onPress={() => navigation.navigate("EmissionSelection")}>
+      </MotiPressable>
+      <MotiPressable 
+        style={$addEmission} 
+        onPress={() => navigation.navigate("EmissionSelection")}
+        animate={
+          useMemo(() => ({ pressed }) => {  
+            "worklet"
+
+            return {
+              scale: pressed ? 0.9 : 1
+            }
+          }, [])
+        }
+        transition={{
+          type: "spring",
+          damping: 5
+        }}
+      >
         <Ionicons style={$addIcon} name="add" color={"white"} size={36} />
-      </Pressable>
+      </MotiPressable>
     </SafeAreaView>
   )
 })
@@ -71,7 +104,6 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen({ na
 const $root: ViewStyle = {
   flex: 1,
   justifyContent: "center",
-  alignItems: "center",
   backgroundColor: colors.background,
   paddingHorizontal: "2%",
   width: "100%"
@@ -135,7 +167,7 @@ const $recurringEmission: ViewStyle = {
   backgroundColor: "blue",
   borderRadius: 50,
   bottom: 80,
-  right: 20
+  right: 15
 }
 
 const $addIcon: ViewStyle = {
@@ -151,5 +183,5 @@ const $addEmission: ViewStyle = {
   backgroundColor: "blue",
   borderRadius: 50,
   bottom: 15,
-  right: 20
+  right: 15
 }
