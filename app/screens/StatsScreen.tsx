@@ -95,7 +95,7 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
     }
 
     return () => chart?.dispose()
-  }, [])
+  }, [barOption])
 
   useEffect(() => {
     let chart: ECharts | undefined
@@ -109,22 +109,30 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
     }
 
     return () => chart?.dispose()
-  }, [])
+  }, [pieOption])
+
+  const renderChart = () => (
+    <ScrollView>
+      <View style={$chart}>
+        <Text style={$label}>Top Emission Days</Text>
+        <SkiaChart ref={barRef} />
+      </View>
+      <View style={$chart}>
+        <Text style={$label}>Top Emission Types</Text>
+        <SkiaChart ref={pieRef} />
+      </View>
+      {/* Have to add empty component for elevation to work for some reason */ }
+      <Text></Text>
+    </ScrollView>
+  )
   
   return (
     <SafeAreaView style={$root} mode="margin">
-      <ScrollView>
-        <View style={$chart}>
-          <Text style={$label}>Top Emission Days</Text>
-          <SkiaChart ref={barRef} />
-        </View>
-        <View style={$chart}>
-          <Text style={$label}>Top Emission Types</Text>
-          <SkiaChart ref={pieRef} />
-        </View>
-        {/* Have to add empty component for elevation to work for some reason */ }
-        <Text></Text>
-      </ScrollView>
+      {
+        emissionStore.nonRecurringEmissionLength === 0 ? 
+          <Text style={$empty}>No emissions recorded 🍃</Text> :
+          renderChart()
+      }
     </SafeAreaView>
   )
 })
@@ -133,6 +141,14 @@ const $root: ViewStyle = {
   flex: 1,
   paddingHorizontal: "2%",
   backgroundColor: colors.background
+}
+
+const $empty: TextStyle = {
+  height: "100%",
+  width: "100%",
+  textAlign: "center",
+  textAlignVertical: "center",
+  fontSize: 18
 }
 
 const $label: TextStyle = {
