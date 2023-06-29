@@ -114,12 +114,12 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
   return (
     <SafeAreaView style={$root} mode="margin">
       <ScrollView>
-        <Text style={$label}>Top Emission Days</Text>
         <View style={$chart}>
+          <Text style={$label}>Top Emission Days</Text>
           <SkiaChart ref={barRef} />
         </View>
-        <Text style={$label}>Top Emission Types</Text>
         <View style={$chart}>
+          <Text style={$label}>Top Emission Types</Text>
           <SkiaChart ref={pieRef} />
         </View>
         {/* Have to add empty component for elevation to work for some reason */ }
