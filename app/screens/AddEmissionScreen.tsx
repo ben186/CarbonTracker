@@ -93,7 +93,7 @@ export const AddEmissionScreen: FC<AddEmissionScreenProps> = observer(function A
 
   const renderSaveAndDeleteButtons = () => (
     <View style={$saveAndDeleteButtons}>
-      <Button style={$normalButton} onPress={() => updateEmission(route.params.id)}>Save</Button>
+      <Button style={$saveButton} onPress={() => updateEmission(route.params.id)}>Save</Button>
       <Button textStyle={$deleteEmissionText} style={$deleteEmission} onPress={() => deleteEmission(route.params.id)}>Delete</Button>
     </View>
   )
@@ -162,7 +162,7 @@ export const AddEmissionScreen: FC<AddEmissionScreenProps> = observer(function A
         </View>
       </View>
       { route.params.id && renderSaveAndDeleteButtons() }
-      { !route.params.id && <Button style={$normalButton} onPress={submitEmission}>Record Emission</Button>}
+      { !route.params.id && <Button style={$recordButton} onPress={submitEmission}>Record Emission</Button>}
     </ScrollView>
   )
 })
@@ -212,10 +212,16 @@ const $saveAndDeleteButtons: ViewStyle = {
   flexDirection: "column"
 }
 
-const $normalButton: ViewStyle = {
+const $saveButton: ViewStyle = {
   bottom: 0,
   width: "100%",
   marginBottom: "1%"
+}
+
+const $recordButton: ViewStyle = {
+  bottom: 0,
+  width: "100%",
+  marginBottom: "4%"
 }
 
 const $deleteEmissionText: TextStyle = {
@@ -227,6 +233,6 @@ const $deleteEmission: ViewStyle = {
   bottom: 0,
   width: "100%",
   marginTop: "1%",
-  marginBottom: "1%",
+  marginBottom: "4%",
   backgroundColor: "red"
 }
