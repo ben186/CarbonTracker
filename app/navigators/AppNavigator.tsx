@@ -64,7 +64,7 @@ const AppBottomTab = observer(function AppBottomTab() {
   )
 
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false, tabBarShowLabel: false, tabBarActiveTintColor: "blue" }}>
+    <Tab.Navigator screenOptions={{ headerShown: false, tabBarShowLabel: true, tabBarActiveTintColor: "blue" }}>
       <Tab.Screen 
         name="HomeNavigator" 
         component={HomeNavigator}
@@ -73,7 +73,8 @@ const AppBottomTab = observer(function AppBottomTab() {
             focused ?
             <Ionicons name="home" color={color} size={size} /> :
             <Ionicons name="home-outline" color={color} size={size} />
-          )
+          ),
+          title: "Home"
         }}
       />
       <Tab.Screen 
@@ -84,7 +85,8 @@ const AppBottomTab = observer(function AppBottomTab() {
             focused ?
             <Ionicons name="stats-chart" color={color} size={size} /> :
             <Ionicons name="stats-chart-outline" color={color} size={size} />
-          )
+          ),
+          title: "Stats"
         }}
       />
       <Tab.Screen 
@@ -95,7 +97,8 @@ const AppBottomTab = observer(function AppBottomTab() {
             focused ?
             <Ionicons name="information-circle" color={color} size={size} /> :
             <Ionicons name="information-circle-outline" color={color} size={size} />
-          )
+          ),
+          title: "About"
         }}
       />
     </Tab.Navigator>
