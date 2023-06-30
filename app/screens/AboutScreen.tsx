@@ -3,6 +3,7 @@ import { observer } from "mobx-react-lite"
 import { Text, TextStyle, ViewStyle } from "react-native"
 import { AppBottomTabScreenProps } from "app/navigators"
 import { SafeAreaView } from "react-native-safe-area-context"
+import { ScrollView } from "react-native-gesture-handler"
 
 interface AboutScreenProp extends AppBottomTabScreenProps<"About"> {}
 
@@ -11,7 +12,9 @@ const ABOUT = "With the power of personal Carbon Tracker, you can effortlessly m
 export const AboutScreen: FC<AboutScreenProp> = observer(function AboutScreen() {
   return (
     <SafeAreaView style={$root} mode="margin">
-      <Text style={$about}>{ABOUT}</Text>
+      <ScrollView>
+        <Text style={$about}>{ABOUT}</Text>
+      </ScrollView>
     </SafeAreaView>
   )
 })
@@ -23,6 +26,7 @@ const $root: ViewStyle = {
 }
 
 const $about: TextStyle = {
-  fontSize: 16,
+  fontSize: 18,
+  lineHeight: 25,
   textAlign: "justify"
 }
