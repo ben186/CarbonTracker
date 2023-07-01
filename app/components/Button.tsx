@@ -35,18 +35,19 @@ export function Button(props: ButtonProps) {
     style: $styleOverride,
     textStyle: $textStyleOverride,
     children,
+    disabled,
     ...rest
   } = props
 
   const $viewStyle = ({ pressed }) => {
     return [
-      $baseStyle, $styleOverride, pressed ? $basePressedStyle : {}
+      $baseStyle, $styleOverride, pressed ? $basePressedStyle : {}, disabled && $baseDisabledStyle
     ]
   }
 
   return (
-    <Pressable style={$viewStyle} accessibilityRole="button" {...rest}>
-      <Text style={[$baseTextStyle, $textStyleOverride]}>
+    <Pressable disabled={disabled} style={$viewStyle} accessibilityRole="button" {...rest}>
+      <Text style={[$baseTextStyle, $textStyleOverride, disabled && $baseDisabledTextStyle]}>
         {children}
       </Text>
     </Pressable>
@@ -62,6 +63,10 @@ const $baseStyle: ViewStyle = {
   borderColor: colors.border
 }
 
+const $baseDisabledStyle: ViewStyle = {
+  backgroundColor: colors.border
+}
+
 const $basePressedStyle: ViewStyle = {
   backgroundColor: colors.border
 }
@@ -70,4 +75,8 @@ const $baseTextStyle: TextStyle = {
   fontSize: 16,
   fontWeight: "bold",
   alignSelf: "center"
+}
+
+const $baseDisabledTextStyle: TextStyle = {
+  color: colors.textDim
 }

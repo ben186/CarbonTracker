@@ -107,7 +107,7 @@ export const AddEmissionScreen: FC<AddEmissionScreenProps> = observer(function A
 
   const renderSaveAndDeleteButtons = () => (
     <View style={$saveAndDeleteButtons}>
-      <Button style={$saveButton} onPress={() => updateEmission(route.params.id)}>Save</Button>
+      <Button disabled={!isValidInput} style={$saveButton} onPress={() => updateEmission(route.params.id)}>Save</Button>
       <Button textStyle={$deleteEmissionText} style={$deleteEmission} onPress={() => deleteEmission(route.params.id)}>Delete</Button>
     </View>
   )
