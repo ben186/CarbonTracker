@@ -27,6 +27,6 @@ const $root: ViewStyle = {
 
 const $about: TextStyle = {
   fontSize: 18,
-  lineHeight: 25,
+  lineHeight: 27,
   textAlign: "justify"
 }
