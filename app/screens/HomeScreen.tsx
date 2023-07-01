@@ -1,6 +1,6 @@
 import React, { FC, useMemo } from "react"
 import { observer } from "mobx-react-lite"
-import { Text, TextStyle, View, ViewStyle, TouchableOpacity, Pressable, SectionList } from "react-native"
+import { Text, TextStyle, View, ViewStyle, TouchableOpacity, SectionList } from "react-native"
 import { HomeNavigatorScreenProps } from "app/navigators"
 import { colors } from "app/theme"
 import { Emission, EmissionModel, useStores } from "app/models"
