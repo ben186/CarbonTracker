@@ -1,4 +1,4 @@
-import React, { FC, useMemo, useState } from "react"
+import React, { FC, useEffect, useMemo, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { ViewStyle, View, TextStyle, Text, TextInput, Alert } from "react-native"
 import { HomeNavigatorScreenProps } from "app/navigators"
@@ -37,6 +37,20 @@ export const AddEmissionScreen: FC<AddEmissionScreenProps> = observer(function A
 
   const totalEmission = useMemo(() => {
     return Number.parseFloat(emissionQuantity) * EMISSIONS.find(v => v.category === category)?.factor
+  }, [emissionQuantity])
+
+  // For validation purposes
+  const [isValidInput, setIsValidInput] = useState(true)
+  
+  useEffect(() => {
+    const parsedQuantity = Number.parseFloat(emissionQuantity)
+
+    const isNotNaN = !isNaN(parsedQuantity)
+    const validExp = /^(\d*.?\d*)$/.test(emissionQuantity)
+    const isHyphenNotIncluded = !emissionQuantity.includes("-")
+    const isNotNegativeOrZero = parsedQuantity > 0
+
+    setIsValidInput(isNotNaN && validExp && isHyphenNotIncluded && isNotNegativeOrZero)
   }, [emissionQuantity])
 
   const deleteEmission = (id: string) => {
@@ -116,10 +130,6 @@ export const AddEmissionScreen: FC<AddEmissionScreenProps> = observer(function A
     <ScrollView contentContainerStyle={$root} keyboardShouldPersistTaps={"handled"} scrollEnabled={false}>
       <View>
         <View style={$inputView}>
-          <Text style={$text}>Emission Type</Text>
-          <Text style={$displayText}>{category ? (category.charAt(0).toUpperCase() + category.slice(1)) : "NONE"}</Text>
-        </View>
-        <View style={$inputView}>
           <Text style={$text}>Date</Text>
           <Text style={$inputText} onPress={pickDate}>{date.toISOString().slice(0, 10)}</Text>
         </View>
@@ -133,6 +143,7 @@ export const AddEmissionScreen: FC<AddEmissionScreenProps> = observer(function A
             placeholderTextColor={colors.textDim}
             keyboardType="numeric"
           />
+          {!isValidInput && <Text style={$error}>ⓘ Please input a valid and positive number</Text>}
         </View>
         <View style={$inputView}>
           <Text style={$text}>Recurring</Text>
@@ -153,6 +164,10 @@ export const AddEmissionScreen: FC<AddEmissionScreenProps> = observer(function A
           />
         </View>
         <View style={$inputView}>
+          <Text style={$text}>Emission Type</Text>
+          <Text style={$displayText}>{category ? (category.charAt(0).toUpperCase() + category.slice(1)) : "NONE"}</Text>
+        </View>
+        <View style={$inputView}>
           <Text style={$text}>Emission Factor</Text>
           <Text style={$displayText}>{EMISSIONS.find(v => v.category === category)?.factor}</Text>
         </View>
@@ -162,7 +177,7 @@ export const AddEmissionScreen: FC<AddEmissionScreenProps> = observer(function A
         </View>
       </View>
       { route.params.id && renderSaveAndDeleteButtons() }
-      { !route.params.id && <Button style={$recordButton} onPress={submitEmission}>Record Emission</Button>}
+      { !route.params.id && <Button disabled={!isValidInput} style={$recordButton} onPress={submitEmission}>Record Emission</Button>}
     </ScrollView>
   )
 })
@@ -191,6 +206,10 @@ const $inputText: TextStyle = {
   marginTop: "2%",
   fontSize: 20,
   color: colors.textDim
+}
+
+const $error: TextStyle = {
+  color: colors.error
 }
 
 const $dropdownStyle: ViewStyle = {
