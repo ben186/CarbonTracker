@@ -116,13 +116,17 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
 
   const renderChart = () => (
     <ScrollView>
-      <View style={$chart}>
-        <Text style={$label}>Top Emission Days</Text>
-        <SkiaChart ref={barRef} />
+      <View style={$chartContainer}>
+        <Text style={$label}>Emission Overview</Text>
+        <View style={$chart}>
+          <SkiaChart ref={barRef} />
+        </View>
       </View>
-      <View style={$chart}>
-        <Text style={$label}>Top Emission Types</Text>
-        <SkiaChart ref={pieRef} />
+      <View style={$chartContainer}>
+        <Text style={$label}>Category Count</Text>
+        <View style={$chart}>
+          <SkiaChart ref={pieRef} />
+        </View>
       </View>
       {/* Have to add empty component for elevation to work for some reason */ }
       <Text></Text>
@@ -154,18 +158,22 @@ const $empty: TextStyle = {
   fontSize: 18
 }
 
-const $label: TextStyle = {
-  fontSize: 18,
-  fontWeight: "bold",
-  alignContent: "center",
-  alignSelf: "center"
-}
-
-const $chart: ViewStyle = {
+const $chartContainer: ViewStyle = {
   alignSelf: "center",
-  alignItems: "center",
   width: "100%",
   marginTop: "1.5%",
   backgroundColor: colors.palette.neutral100,
   elevation: 4
+}
+
+const $label: TextStyle = {
+  fontSize: 18,
+  fontWeight: "bold",
+  textAlign: "left",
+  lineHeight: 35,
+  marginHorizontal: "2%"
+}
+
+const $chart: ViewStyle = {
+  alignSelf: "center"
 }
