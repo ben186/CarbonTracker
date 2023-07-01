@@ -7,41 +7,43 @@ import SkiaChart, { SVGRenderer } from "@wuba/react-native-echarts/skiaChart"
 import { BarChart, PieChart } from "echarts/charts"
 import type { EChartsOption } from "echarts"
 import type { ECharts } from "echarts/core"
-import { GridComponent } from "echarts/components"
+import { GridComponent, LegendComponent } from "echarts/components"
 import { useStores } from "app/models"
 import { getDay } from "date-fns"
 import { EMISSIONS } from "app/constants"
 import { colors } from "app/theme"
 import { SafeAreaView } from "react-native-safe-area-context"
 
-echarts.use([SVGRenderer, BarChart, PieChart, GridComponent])
+echarts.use([SVGRenderer, BarChart, PieChart, GridComponent, LegendComponent])
 
 interface StatsScreenProps extends StatsNavigatorScreenProps<"Stats"> {}
 
+const DAY = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+
 export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen() {
   const barRef = useRef<HTMLElement | null>(null)
+  const barData: Array<Array<number>> = new Array(EMISSIONS.length).fill(new Array(DAY.length).fill(0))
   const barOption: EChartsOption = {
     grid: {
       left: "center",
       containLabel: true
     },
+    legend: {
+      orient: "horizontal"
+    },
     xAxis: {
       type: "category",
-      data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+      data: DAY
     },
     yAxis: {
       type: "value",
       axisLabel: {
-        formatter: (value) => value.toPrecision(3)
+        formatter: (value) => value === 0 ? "0" : (value / 1000).toString()
       },
+      name: "kg CO2e",
       show: true
     },
-    series: [
-      {
-        data: [0, 0, 0, 0, 0, 0, 0],
-        type: "bar"
-      }
-    ]
+    series: new Array(EMISSIONS.length).fill({})
   }
 
   const pieRef = useRef<HTMLElement | null>(null)
@@ -76,14 +78,26 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
   emissionStore.emissions.forEach(emission => {
     if (emission.recurrence) return
 
-    // Originally starts with Sunday and shifted to Monday as starting day of the week
-    const day = (getDay(new Date(emission.timestamp)) + 1) % 7
-
     // TODO: Try to simplify this operation by calculating ahead of time?
     const totalEmission = emission.emission * EMISSIONS.find(e => e.category === emission.emissionType).factor
 
-    barOption.series[0].data[day] += totalEmission
+    // Originally starts with Sunday and shifted to Monday as starting day of the week
+    const day = (getDay(new Date(emission.timestamp)) + 1) % 7
+    const emissionIndex = EMISSIONS.findIndex(x => x.category === emission.emissionType)
+    barData[emissionIndex][day] += totalEmission
+
     pieOption.series[0].data.find(x => x.name.toLowerCase() === emission.emissionType).value += totalEmission
+  })
+
+  Object.keys(barData).forEach(key => {
+    const category: string = EMISSIONS[key].category
+
+    barOption.series[key] = {
+      name: category.charAt(0).toUpperCase() + category.slice(1),
+      data: barData[key],
+      type: "bar",
+      stack: "stack"
+    }
   })
 
   useEffect(() => {
@@ -92,7 +106,7 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
       chart = echarts.init(barRef.current, "light", {
         renderer: "svg",
         width: 800,
-        height: 350,
+        height: 380,
       })
       chart.setOption(barOption)  
     }
