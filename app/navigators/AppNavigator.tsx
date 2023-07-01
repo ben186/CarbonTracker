@@ -64,7 +64,7 @@ const AppBottomTab = observer(function AppBottomTab() {
   )
 
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false, tabBarShowLabel: true, tabBarActiveTintColor: "blue" }}>
+    <Tab.Navigator screenOptions={{ headerShown: false, tabBarShowLabel: true }}>
       <Tab.Screen 
         name="HomeNavigator" 
         component={HomeNavigator}
