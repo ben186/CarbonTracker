@@ -33,7 +33,7 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
     },
     xAxis: {
       type: "category",
-      data: DAY
+      data: DAY,
     },
     yAxis: {
       type: "value",
@@ -133,7 +133,7 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
       <Text style={$header}>STATISTICS</Text>
       <View style={$chartContainer}>
         <Text style={$label}>Emission Overview</Text>
-        <View style={$chart}>
+        <View style={[$chart, $barChart]}>
           <SkiaChart ref={barRef} />
         </View>
       </View>
@@ -199,4 +199,8 @@ const $label: TextStyle = {
 
 const $chart: ViewStyle = {
   alignSelf: "center"
+}
+
+const $barChart: ViewStyle = {
+  marginBottom: -45
 }
