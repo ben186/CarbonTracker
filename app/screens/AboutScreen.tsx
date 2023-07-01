@@ -13,6 +13,7 @@ export const AboutScreen: FC<AboutScreenProp> = observer(function AboutScreen() 
   return (
     <SafeAreaView style={$root} mode="margin">
       <ScrollView>
+        <Text style={$header}>ABOUT</Text>
         <Text style={$about}>{ABOUT}</Text>
       </ScrollView>
     </SafeAreaView>
@@ -23,6 +24,14 @@ const $root: ViewStyle = {
   flex: 1,
   flexDirection: "column",
   paddingHorizontal: "2%"
+}
+
+const $header: TextStyle = {
+  fontSize: 25,
+  fontWeight: "bold",
+  lineHeight: 28,
+  letterSpacing: -1.05,
+  paddingVertical: "2%"
 }
 
 const $about: TextStyle = {

@@ -130,6 +130,7 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
 
   const renderChart = () => (
     <ScrollView>
+      <Text style={$header}>STATISTICS</Text>
       <View style={$chartContainer}>
         <Text style={$label}>Emission Overview</Text>
         <View style={$chart}>
@@ -170,6 +171,14 @@ const $empty: TextStyle = {
   textAlign: "center",
   textAlignVertical: "center",
   fontSize: 18
+}
+
+const $header: TextStyle = {
+  fontSize: 25,
+  fontWeight: "bold",
+  lineHeight: 28,
+  letterSpacing: -1.05,
+  paddingVertical: "2%"
 }
 
 const $chartContainer: ViewStyle = {
