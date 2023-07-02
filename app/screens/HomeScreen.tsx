@@ -10,11 +10,19 @@ import { EMISSIONS } from "app/constants"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { MotiPressable } from "moti/interactions"
 import { NavigationProp, useNavigation } from "@react-navigation/native"
+import { getDay } from "date-fns"
 
 function getRandomDate(from: Date, to: Date) {
   const fromTime = from.getTime()
   const toTime = to.getTime()
   return new Date(fromTime + Math.random() * (toTime - fromTime))
+}
+
+// Date argument in UTC
+const DAY = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+function dateToDay(date: string) {
+  const day = getDay(Date.parse(date))
+  return DAY[day]
 }
 
 interface HomeScreenProps extends HomeNavigatorScreenProps<"Home"> {}
@@ -25,7 +33,7 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen({ na
 
   const { emissionStore } = useStores()
 
-  // emissionStore.setProp("emissions", [])
+  emissionStore.setProp("emissions", [])
 
   // Add random emissions
   // if (emissionStore.emissions.length < 10) {
@@ -50,7 +58,10 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen({ na
   )
 
   const renderHeader = ({section}: { section: { title: string }}) => (
-    <Text style={$headerText}>{section.title.slice(-5)}</Text>
+    <View style={$sectionHeader}>
+      <Text style={$sectionHeaderText}>{section.title.slice(-5)}</Text>
+      <Text style={$sectionHeaderDayText}>{dateToDay(section.title)}</Text>
+    </View>
   )
 
   return (
@@ -163,22 +174,41 @@ const $detailText: TextStyle = {
 }
 
 const $empty: TextStyle = {
-  height: "100%",
-  width: "100%",
   textAlign: "center",
   textAlignVertical: "center",
   fontSize: 18
 }
 
-const $headerText: TextStyle = {
+const $sectionHeader: ViewStyle = {
+  flexDirection: "row",
+  justifyContent: "center"
+}
+
+const $sectionHeaderText: TextStyle = {
   fontSize: 18,
   fontWeight: "bold",
-  alignSelf: "center"
+  alignSelf: "center",
+  paddingHorizontal: "1%"
+}
+
+const $sectionHeaderDayText: TextStyle = {
+  backgroundColor: colors.tint,
+  color: colors.palette.primary100,
+  fontSize: 12,
+  fontWeight: "bold",
+  height: 20,
+  width: 35,
+  borderRadius: 3,
+  textAlign: "center",
+  textAlignVertical: "center",
+  alignSelf: "center",
+  paddingHorizontal: "1%"
 }
 
 const $list: ViewStyle = {
   flex: 1,
-  alignSelf: "stretch"
+  alignSelf: "stretch",
+  paddingTop: "1%"
 }
 
 const $iconStyle: ViewStyle = {
