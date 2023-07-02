@@ -56,11 +56,9 @@ export function Button(props: ButtonProps) {
 
 const $baseStyle: ViewStyle = {
   width: "100%",
-  backgroundColor: colors.palette.neutral100,
+  backgroundColor: colors.tint,
   justifyContent: "center",
-  paddingVertical: 15,
-  borderWidth: 1,
-  borderColor: colors.border
+  paddingVertical: 15
 }
 
 const $baseDisabledStyle: ViewStyle = {
@@ -74,7 +72,8 @@ const $basePressedStyle: ViewStyle = {
 const $baseTextStyle: TextStyle = {
   fontSize: 16,
   fontWeight: "bold",
-  alignSelf: "center"
+  alignSelf: "center",
+  color: colors.palette.primary100
 }
 
 const $baseDisabledTextStyle: TextStyle = {

@@ -244,7 +244,7 @@ const $recordButton: ViewStyle = {
 }
 
 const $deleteEmissionText: TextStyle = {
-  color: "#ffffff"
+  color: colors.palette.primary100
 }
 
 const $deleteEmission: ViewStyle = {

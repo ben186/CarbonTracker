@@ -164,7 +164,7 @@ const $recurringEmission: ViewStyle = {
   width: 55,
   justifyContent: "center",
   alignItems: "center",
-  backgroundColor: "blue",
+  backgroundColor: colors.tint,
   borderRadius: 50,
   bottom: 80,
   right: 15
@@ -180,7 +180,7 @@ const $addEmission: ViewStyle = {
   width: 55,
   justifyContent: "center",
   alignItems: "center",
-  backgroundColor: "blue",
+  backgroundColor: colors.tint,
   borderRadius: 50,
   bottom: 15,
   right: 15

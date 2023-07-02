@@ -4,20 +4,17 @@
  * Generally speaking, it will contain an auth flow (registration, login, forgot password)
  * and a "main" flow which the user will use once logged in.
  */
-import {
-  NavigationContainer,
-  useFocusEffect
-} from "@react-navigation/native"
+import { NavigationContainer } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
-import React, { useCallback } from "react"
+import React from "react"
 import { Ionicons } from "@expo/vector-icons"
 import Config from "../config"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { createBottomTabNavigator, BottomTabScreenProps } from "@react-navigation/bottom-tabs"
 import { HomeNavigator } from "./HomeNavigator"
 import { StatsNavigator } from "./StatsNavigator"
-import { setStatusBarBackgroundColor, setStatusBarStyle, setStatusBarTranslucent } from "expo-status-bar"
 import { AboutScreen } from "app/screens"
+import { colors } from "app/theme"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -55,13 +52,14 @@ const Tab = createBottomTabNavigator<AppBottomTabParamList>()
 const AppBottomTab = observer(function AppBottomTab() {
 
   // Force light mode for now
-  useFocusEffect(
-    useCallback(() => {
-      setStatusBarStyle("dark")
-      setStatusBarBackgroundColor("white", true)
-      setStatusBarTranslucent(true)
-    }, [])
-  )
+  // TODO: Check if the theme can replaced the code below (Optional)
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     setStatusBarStyle("dark")
+  //     setStatusBarBackgroundColor("white", true)
+  //     setStatusBarTranslucent(true)
+  //   }, [])
+  // )
 
   return (
     <Tab.Navigator screenOptions={{ headerShown: false, tabBarShowLabel: true }}>
@@ -107,6 +105,18 @@ const AppBottomTab = observer(function AppBottomTab() {
 
 interface NavigationProps extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
 
+const THEME = {
+  dark: false,
+  colors: {
+      primary: colors.tint,
+      background: colors.background,
+      card: colors.palette.neutral100,
+      text: colors.text,
+      border: colors.border,
+      notification: colors.tint
+  }
+}
+
 export const AppNavigator = observer(function AppNavigator(props: NavigationProps) {
 
   useBackButtonHandler((routeName) => exitRoutes.includes(routeName))
@@ -114,6 +124,7 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
   return (
     <>
       <NavigationContainer
+        theme={THEME}
         ref={navigationRef}
         {...props}
       >
