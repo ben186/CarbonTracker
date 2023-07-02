@@ -1,7 +1,7 @@
 import React, { FC, useMemo } from "react"
 import { observer } from "mobx-react-lite"
-import { Text, TextStyle, View, ViewStyle, TouchableOpacity, SectionList } from "react-native"
-import { HomeNavigatorScreenProps } from "app/navigators"
+import { Text, TextStyle, View, ViewStyle, TouchableOpacity, SectionList, Pressable } from "react-native"
+import { HomeNavigatorScreenProps, AppBottomTabParamList } from "app/navigators"
 import { colors } from "app/theme"
 import { Emission, EmissionModel, useStores } from "app/models"
 import { Ionicons } from "@expo/vector-icons"
@@ -9,6 +9,7 @@ import * as Crypto from "expo-crypto"
 import { EMISSIONS } from "app/constants"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { MotiPressable } from "moti/interactions"
+import { NavigationProp, useNavigation } from "@react-navigation/native"
 
 function getRandomDate(from: Date, to: Date) {
   const fromTime = from.getTime()
@@ -19,6 +20,8 @@ function getRandomDate(from: Date, to: Date) {
 interface HomeScreenProps extends HomeNavigatorScreenProps<"Home"> {}
 
 export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen({ navigation }) {
+
+  const appBottomTabNavigator = useNavigation<NavigationProp<AppBottomTabParamList>>()
 
   const { emissionStore } = useStores()
 
@@ -52,6 +55,13 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen({ na
 
   return (
     <SafeAreaView style={$root} mode="margin">
+      <Text style={$header}>HOME</Text>
+      <Pressable onPress={() => appBottomTabNavigator.navigate("StatsNavigator")} style={$totalEmissionContainer}>
+        <Text style={$labelText}>Your total emission:</Text>
+        <Text style={$numberText}>{emissionStore.totalEmission}</Text>
+        <Text style={$unitText}>kg CO2e</Text>
+        <Text style={$detailText}>{"Press to see breakdown >"}</Text>
+      </Pressable>
       {emissionStore.nonRecurringEmissionLength === 0 && <Text style={$empty}>No emissions recorded 🍃</Text>}
       <SectionList
         style={$list}
@@ -107,6 +117,49 @@ const $root: ViewStyle = {
   backgroundColor: colors.background,
   paddingHorizontal: "2%",
   width: "100%"
+}
+
+const $header: TextStyle = {
+  fontSize: 25,
+  fontWeight: "bold",
+  lineHeight: 28,
+  letterSpacing: -1.05,
+  paddingVertical: "2%"
+}
+
+const $totalEmissionContainer: ViewStyle = {
+  marginTop: "1%",
+  paddingHorizontal: "2%",
+  borderRadius: 3,
+  backgroundColor: colors.palette.primary700
+}
+
+const $labelText: TextStyle = {
+  fontSize: 25,
+  color: colors.palette.primary200
+}
+
+const $numberText: TextStyle = {
+  fontSize: 45,
+  fontWeight: "500",
+  alignSelf: "center",
+  color: colors.palette.primary100
+}
+
+const $unitText: TextStyle = {
+  fontSize: 20,
+  fontWeight: "500",
+  alignSelf: "center",
+  color: colors.palette.primary200
+}
+
+const $detailText: TextStyle = {
+  fontSize: 10,
+  fontStyle: "italic",
+  fontWeight: "bold",
+  alignSelf: "flex-end",
+  color: colors.palette.primary100,
+  paddingBottom: "1%"
 }
 
 const $empty: TextStyle = {
