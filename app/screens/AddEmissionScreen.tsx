@@ -173,7 +173,7 @@ export const AddEmissionScreen: FC<AddEmissionScreenProps> = observer(function A
         </View>
         <View style={$inputView}>
           <Text style={$text}>Total Emission (gCO2e)</Text>
-          <Text style={$displayText}>{isNaN(totalEmission) ? 0 : totalEmission.toLocaleString(undefined, { maximumFractionDigits:2 })}</Text>
+          <Text style={$displayText}>{!isValidInput ? "-" : totalEmission.toLocaleString(undefined, { maximumFractionDigits: 2 })}</Text>
         </View>
       </View>
       { route.params.id && renderSaveAndDeleteButtons() }
