@@ -136,7 +136,7 @@ export const AddEmissionScreen: FC<AddEmissionScreenProps> = observer(function A
         <View style={$inputView}>
           <Text style={$text}>{ category ? "Emission Quantity (" + EMISSIONS.find(v => v.category === category).unit +")" : "Emission Quantity" }</Text>
           <TextInput
-            style={$inputText}
+            style={[$inputText, isValidInput ? {} : $invalidInputText]}
             onChangeText={setEmissionQuantity}
             value={emissionQuantity}
             placeholder="Input your emission quantity..."
@@ -208,6 +208,10 @@ const $inputText: TextStyle = {
   color: colors.textDim
 }
 
+const $invalidInputText: TextStyle = {
+  borderColor: colors.error
+}
+
 const $error: TextStyle = {
   color: colors.error
 }
@@ -218,7 +222,8 @@ const $dropdownStyle: ViewStyle = {
 }
 
 const $itemText: TextStyle = {
-  fontSize: 20
+  fontSize: 20,
+  color: colors.textDim
 }
 
 const $displayText: TextStyle = {
