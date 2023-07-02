@@ -102,7 +102,7 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
 
   useEffect(() => {
     let chart: ECharts | undefined
-    if (barRef.current) {
+    if (barRef.current && emissionStore.nonRecurringEmissionLength !== 0) {
       chart = echarts.init(barRef.current, "light", {
         renderer: "svg",
         width: 800,
@@ -116,7 +116,7 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
 
   useEffect(() => {
     let chart: ECharts | undefined
-    if (pieRef.current) {
+    if (pieRef.current && emissionStore.nonRecurringEmissionLength !== 0) {
       chart = echarts.init(pieRef.current, "light", {
         renderer: "svg",
         width: 400,
