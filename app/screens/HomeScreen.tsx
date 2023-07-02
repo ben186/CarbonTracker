@@ -135,12 +135,12 @@ const $totalEmissionContainer: ViewStyle = {
 }
 
 const $labelText: TextStyle = {
-  fontSize: 25,
+  fontSize: 20,
   color: colors.palette.primary200
 }
 
 const $numberText: TextStyle = {
-  fontSize: 45,
+  fontSize: 40,
   fontWeight: "500",
   alignSelf: "center",
   color: colors.palette.primary100
