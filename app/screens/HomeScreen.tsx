@@ -69,7 +69,7 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen({ na
       <Text style={$header}>HOME</Text>
       <Pressable onPress={() => appBottomTabNavigator.navigate("StatsNavigator")} style={$totalEmissionContainer}>
         <Text style={$labelText}>Your total emission:</Text>
-        <Text style={$numberText}>{emissionStore.totalEmission / 1000}</Text>
+        <Text style={$numberText}>{emissionStore.totalEmission === 0 ? 0 : (emissionStore.totalEmission / 1000).toFixed(3)}</Text>
         <Text style={$unitText}>kg CO2e</Text>
         <Text style={$detailText}>{"Press to see breakdown >"}</Text>
       </Pressable>
