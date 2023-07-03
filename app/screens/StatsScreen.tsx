@@ -78,7 +78,7 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
   emissionStore.emissions.forEach(emission => {
     if (emission.recurrence) return
 
-    // TODO: Try to simplify this operation by calculating ahead of time?
+    // TODO: Try to simplify this operation by calculating ahead of time (Optional)
     const totalEmission = emission.emission * EMISSIONS.find(e => e.category === emission.emissionType).factor
 
     // Originally starts with Sunday and shifted to Monday as starting day of the week
