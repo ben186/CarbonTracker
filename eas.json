@@ -5,10 +5,10 @@
       "distribution": "internal"
     },
     "preview": {
-      "distribution": "internal",
-      "ios": {
-        "enterpriseProvisioning": "universal"
-      }
+      "android": {
+        "buildType": "apk"
+      },
+      "distribution": "internal"
     },
     "production": {}
   }
