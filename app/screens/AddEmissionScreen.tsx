@@ -47,10 +47,16 @@ export const AddEmissionScreen: FC<AddEmissionScreenProps> = observer(function A
 
     const isNotNaN = !isNaN(parsedQuantity)
     const validExp = /^(\d*.?\d*)$/.test(emissionQuantity)
-    const isHyphenNotIncluded = !emissionQuantity.includes("-")
+    const isWhitespaceIncluded = emissionQuantity.includes(" ")
+    const isHyphenIncluded = emissionQuantity.includes("-")
+    const isDecimalIncluded = emissionQuantity.includes(".")
     const isNotNegativeOrZero = parsedQuantity > 0
 
-    setIsValidInput(isNotNaN && validExp && isHyphenNotIncluded && isNotNegativeOrZero)
+    const validate = () => category === "meal" ? 
+      (isNotNaN && !isWhitespaceIncluded && !isDecimalIncluded && !isHyphenIncluded && isNotNegativeOrZero) :
+      (isNotNaN && !isWhitespaceIncluded && validExp && !isHyphenIncluded && isNotNegativeOrZero)
+
+    setIsValidInput(validate())
   }, [emissionQuantity])
 
   const deleteEmission = (id: string) => {
