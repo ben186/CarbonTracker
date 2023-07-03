@@ -36,16 +36,16 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen({ na
   // emissionStore.setProp("emissions", [])
 
   // Add random emissions
-  if (emissionStore.emissions.length < 10) {
-    for (let i = 0; i < 100; i++) {
-      emissionStore.addEmission(EmissionModel.create({
-        id: Crypto.randomUUID(),
-        timestamp: getRandomDate(new Date('2023-5-01T01:57:45.271Z'), new Date()).valueOf(),
-        emissionType: EMISSIONS.map(x => x.category)[Math.floor(Math.random() * 4)],
-        emission: Math.floor(Math.random() * (100 - 2 + 1) + 2)
-      }))
-    }
-  } 
+  // if (emissionStore.emissions.length < 10) {
+  //   for (let i = 0; i < 100; i++) {
+  //     emissionStore.addEmission(EmissionModel.create({
+  //       id: Crypto.randomUUID(),
+  //       timestamp: getRandomDate(new Date('2023-5-01T01:57:45.271Z'), new Date()).valueOf(),
+  //       emissionType: EMISSIONS.map(x => x.category)[Math.floor(Math.random() * 4)],
+  //       emission: Math.floor(Math.random() * (100 - 2 + 1) + 2)
+  //     }))
+  //   }
+  // } 
   
   const renderItem = ({item}: {item: Emission}) => (
     <TouchableOpacity onPress={() => navigation.navigate("AddEmission", { id: item.id })} style={$item}>
