@@ -10,7 +10,7 @@ import type { ECharts } from "echarts/core"
 import { GridComponent, LegendComponent } from "echarts/components"
 import { useStores } from "app/models"
 import { getDay } from "date-fns"
-import { EMISSION, EMISSIONS } from "app/constants"
+import { EMISSIONS } from "app/constants"
 import { colors } from "app/theme"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { Ionicons } from "@expo/vector-icons"
@@ -50,7 +50,7 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
   }
 
   const pieRef = useRef<HTMLElement | null>(null)
-  const pieData : Map<string, number> = new Map()
+  const pieData : Map<string, number> = new Map() // !!! Don't access with pieData[category], it is a Map
   const pieOption: EChartsOption = {
     color: ["#56b83d", "#2E8A7B", "#DB8448", "#D24656"],
     series: [
@@ -75,7 +75,10 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
     const emissionIndex = EMISSIONS.findIndex(x => x.category === emission.emissionType)
     barData[emissionIndex][day] += totalEmission
 
-    pieData[emission.emissionType] = (pieData[emission.emissionType] ?? 0) + totalEmission
+    pieData.set(
+      emission.emissionType, 
+      (pieData.has(emission.emissionType) ? pieData.get(emission.emissionType) : 0) + totalEmission
+    )
   })
 
   // Assign chart data
@@ -90,11 +93,11 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
     }
   })
 
-  Object.keys(pieData).forEach(key => {
+  for (const [key, emission] of pieData) {
     const category = key.charAt(0).toUpperCase() + key.slice(1)
 
-    pieOption.series[0].data.push({ name: category, value: pieData[key]})
-  })
+    pieOption.series[0].data.push({ name: category, value: emission})
+  }
 
   useEffect(() => {
     let chart: ECharts | undefined
@@ -124,15 +127,21 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
     return () => chart?.dispose()
   }, [pieOption])
 
-  const renderPercentageItem = (e: EMISSION) => (
-    <View key={e.category} style={$category}>
-      <Ionicons style={$icon} name={e.icon} size={32} />
-      <View style={$emissionPercentageLabelContainer}>
-        <Text style={$emissionPercentageLabel}>{e.category.charAt(0).toUpperCase() + e.category.slice(1)}</Text>
-        <Text style={$percentageLabel}>{((pieData[e.category] ?? 0) / emissionStore.totalEmission * 100).toFixed(0) + "%"}</Text>
+  const renderPercentageItem = ([category, emission]: [string, number]) => {
+    const emissionInfo = EMISSIONS.find(x => x.category === category)
+
+    return (
+      <View key={emissionInfo.category} style={$category}>
+        <Ionicons style={$icon} name={emissionInfo.icon} size={32} />
+        <View style={$emissionPercentageLabelContainer}>
+          <Text style={$emissionPercentageLabel}>{emissionInfo.category.charAt(0).toUpperCase() + emissionInfo.category.slice(1)}</Text>
+          <Text style={$percentageLabel}>{(emission / emissionStore.totalEmission * 100).toFixed(0) + "%"}</Text>
+        </View>
       </View>
-    </View>
-  )
+    )
+  }
+
+  console.log([...pieData])
 
   const renderChart = () => (
     <ScrollView>
@@ -144,7 +153,7 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
       </View>
       <View style={$chartContainer}>
         <Text style={$label}>Emission Percentage</Text>
-        { EMISSIONS.map(e => renderPercentageItem(e)) }
+        { [...pieData].sort((a, b) => b[1] - a[1]).map(data => renderPercentageItem(data)) } 
       </View>
       <View style={$chartContainer}>
         <Text style={$label}>Emission Overview</Text>
