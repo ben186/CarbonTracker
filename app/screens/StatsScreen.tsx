@@ -141,8 +141,6 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
     )
   }
 
-  console.log([...pieData])
-
   const renderChart = () => (
     <ScrollView>
       <View style={$chartContainer}>
