@@ -2,6 +2,7 @@ import { Instance, SnapshotIn, SnapshotOut, types } from "mobx-state-tree"
 import { withSetPropAction } from "./helpers/withSetPropAction"
 import { Emission, EmissionModel } from "./Emission"
 import * as Crypto from "expo-crypto"
+import { EMISSIONS } from "app/constants"
 
 /**
  * Model description here for TypeScript hints.
@@ -59,7 +60,7 @@ export const EmissionStoreModel = types
     },
     get totalEmission() {
       return store.emissions
-        .map(em => em.recurrence ? 0 : em.emission)
+        .map(em => em.recurrence ? 0 : em.emission * EMISSIONS.find(e => e.category === em.emissionType).factor)
         .reduce((total, current) => total + current, 0)
     }
   })) // eslint-disable-line @typescript-eslint/no-unused-vars
