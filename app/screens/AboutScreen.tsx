@@ -7,7 +7,8 @@ import { ScrollView } from "react-native-gesture-handler"
 
 interface AboutScreenProp extends AppBottomTabScreenProps<"About"> {}
 
-const ABOUT = "With the power of personal Carbon Tracker, you can effortlessly monitor and analyze various aspects of your carbon emissions. Our app provides you with detailed insights into key areas such as food, electricity, transport, and even allows you to track custom emissions specific to your lifestyle.\n\nWe believe that every individual can contribute to a more sustainable future, and the first step is awareness. By using our app, you'll gain a deeper understanding of your carbon footprint and how your daily choices impact the environment. Through data visualization and personalized reports, you'll be able to track your progress over time, set goals, and make informed decisions to reduce your carbon footprint.\n\nOur app offers a seamless user experience, with an intuitive interface designed to make carbon footprint tracking a breeze. You can easily log your activities, input relevant data, and visualize your carbon emissions in real-time. The app also provides tips and suggestions for eco-friendly alternatives, empowering you to make greener choices in your everyday life.\n\nWe prioritize the privacy and security of our users' data. Rest assured that your information is encrypted and stored securely, ensuring that your personal carbon footprint data remains confidential.\n\nJoin us on this journey towards a more sustainable future. Download the Carbon Footprint Mobile Application today and take the first step towards making a positive impact on our planet. Together, we can create a greener and healthier world for generations to come.\n\nThank you for choosing the Carbon Footprint Mobile Application. 😄"
+const ABOUT = `We believe that every individual can contribute to a more sustainable future, and the first step is awareness. By using our app, you will gain a deeper understanding of your carbon footprint and how your daily choices impact the environment. Through data visualization and personalized reports, you will be able to track your progress over time, set goals, and make informed decisions to reduce your carbon footprint.`
+const PRIVACY = `Carbon Tracker does not require any sign-up or account creation. We do not collect or store any of your personal data on our servers. Your carbon footprint tracking data is stored locally on your device, meaning it remains under your complete control at all times.`
 
 export const AboutScreen: FC<AboutScreenProp> = observer(function AboutScreen() {
   return (
@@ -15,6 +16,8 @@ export const AboutScreen: FC<AboutScreenProp> = observer(function AboutScreen() 
       <Text style={$header}>ABOUT</Text>
       <ScrollView>
         <Text style={$about}>{ABOUT}</Text>
+        <Text style={$subHeader}>Privacy</Text>
+        <Text style={$about}>{PRIVACY}</Text>
       </ScrollView>
     </SafeAreaView>
   )
@@ -31,6 +34,14 @@ const $header: TextStyle = {
   fontWeight: "bold",
   lineHeight: 28,
   letterSpacing: -1.05,
+  paddingVertical: "2%"
+}
+
+const $subHeader: TextStyle = {
+  fontSize: 21,
+  fontWeight: "600",
+  lineHeight: 25,
+  letterSpacing: -0.5,
   paddingVertical: "2%"
 }
 
