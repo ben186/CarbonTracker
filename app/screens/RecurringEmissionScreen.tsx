@@ -16,8 +16,11 @@ export const RecurringEmissionScreen: FC<RecurringEmissionScreenProps> = observe
     <TouchableOpacity onPress={() => navigation.navigate("AddEmission", { id: item.id })} style={$item}>
       <Ionicons style={$iconStyle} name={EMISSIONS.find(c => c.category === item.emissionType).icon} size={32} />
       <View style={$label}>
-        <Text style={$text}>{item.emissionType.toUpperCase()}</Text>
-        <Text>{(item.emission * EMISSIONS.find(c => c.category === item.emissionType).factor).toLocaleString() + " gCO2e"}</Text>
+        <View>
+          <Text style={$text}>{item.emissionType.toUpperCase()}</Text>
+          <Text>{(item.emission * EMISSIONS.find(c => c.category === item.emissionType).factor).toLocaleString() + " gCO2e"}</Text>
+        </View>
+        <Text style={$recurringLabel}>{item.recurrence.frequency.charAt(0).toUpperCase() + item.recurrence.frequency.slice(1)}</Text>
       </View>
     </TouchableOpacity>
   )
@@ -53,6 +56,7 @@ const $empty: TextStyle = {
 const $list: ViewStyle = {
   flex: 1,
   alignSelf: "stretch",
+  paddingTop: "1%"
 }
 
 const $iconStyle: ViewStyle = {
@@ -78,5 +82,19 @@ const $text: TextStyle = {
 
 const $label: ViewStyle = {
   flex: 1,
+  flexDirection: "row",
   justifyContent: "space-between"
+}
+
+const $recurringLabel: TextStyle = {
+  backgroundColor: colors.tint,
+  color: colors.palette.primary100,
+  fontWeight: "500",
+  height: 30,
+  width: 70,
+  borderRadius: 3,
+  textAlign: "center",
+  textAlignVertical: "center",
+  alignSelf: "center",
+  paddingHorizontal: "1%"
 }
