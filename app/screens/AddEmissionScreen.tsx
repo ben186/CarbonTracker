@@ -202,7 +202,7 @@ const $text: TextStyle = {
 
 const $inputText: TextStyle = {
   borderBottomWidth: 1,
-  borderColor: colors.border,
+  borderColor: colors.palette.primary600,
   marginTop: "2%",
   fontSize: 20,
   color: colors.textDim
@@ -218,7 +218,7 @@ const $error: TextStyle = {
 
 const $dropdownStyle: ViewStyle = {
   borderBottomWidth: 1,
-  borderColor: colors.border
+  borderColor: colors.palette.primary600
 }
 
 const $itemText: TextStyle = {
