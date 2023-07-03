@@ -22,7 +22,8 @@ const DAY = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 
 export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen() {
   const barRef = useRef<HTMLElement | null>(null)
-  const barData: Array<Array<number>> = new Array(EMISSIONS.length).fill(new Array(DAY.length).fill(0))
+  // Be careful that we must use .fill().map() to avoid array of references when compared to use .fill() only
+  const barData: Array<Array<number>> = new Array(EMISSIONS.length).fill(0).map(_ => new Array(DAY.length).fill(0))
   const barOption: EChartsOption = {
     grid: {
       left: "center",
@@ -47,34 +48,19 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
   }
 
   const pieRef = useRef<HTMLElement | null>(null)
+  const pieData : Map<string, number> = new Map()
   const pieOption: EChartsOption = {
     series: [
       {
         type: "pie",
-        data: [
-          {
-            value: 0,
-            name: "Car"
-          },
-          {
-            value: 0,
-            name: "Electricity"
-          },
-          {
-            value: 0,
-            name: "Food"
-          },
-          {
-            value: 0,
-            name: "Custom"
-          }
-        ]
+        data: []
       }
     ]
   }
 
   const { emissionStore } = useStores()
 
+  // Extract chart data
   emissionStore.emissions.forEach(emission => {
     if (emission.recurrence) return
 
@@ -86,9 +72,10 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
     const emissionIndex = EMISSIONS.findIndex(x => x.category === emission.emissionType)
     barData[emissionIndex][day] += totalEmission
 
-    pieOption.series[0].data.find(x => x.name.toLowerCase() === emission.emissionType).value += totalEmission
+    pieData[emission.emissionType] = pieData[emission.emissionType] ?? 0 + totalEmission
   })
 
+  // Assign chart data
   Object.keys(barData).forEach(key => {
     const category: string = EMISSIONS[key].category
 
@@ -98,6 +85,12 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
       type: "bar",
       stack: "stack"
     }
+  })
+
+  Object.keys(pieData).forEach(key => {
+    const category = key.charAt(0).toUpperCase() + key.slice(1)
+
+    pieOption.series[0].data.push({ name: category, value: pieData[key]})
   })
 
   useEffect(() => {
