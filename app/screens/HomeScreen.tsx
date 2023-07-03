@@ -33,7 +33,7 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen({ na
 
   const { emissionStore } = useStores()
 
-  emissionStore.setProp("emissions", [])
+  // emissionStore.setProp("emissions", [])
 
   // Add random emissions
   // if (emissionStore.emissions.length < 10) {
@@ -69,11 +69,11 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen({ na
       <Text style={$header}>HOME</Text>
       <Pressable onPress={() => appBottomTabNavigator.navigate("StatsNavigator")} style={$totalEmissionContainer}>
         <Text style={$labelText}>Your total emission:</Text>
-        <Text style={$numberText}>{emissionStore.totalEmission}</Text>
+        <Text style={$numberText}>{emissionStore.totalEmission / 1000}</Text>
         <Text style={$unitText}>kg CO2e</Text>
         <Text style={$detailText}>{"Press to see breakdown >"}</Text>
       </Pressable>
-      {emissionStore.nonRecurringEmissionLength === 0 && <Text style={$empty}>No emissions added yet</Text>}
+      {emissionStore.nonRecurringEmissionLength === 0 && <Text style={$empty}>{"🍃\nNo emissions added yet..."}</Text>}
       <SectionList
         style={$list}
         sections={emissionStore.listNonRecurrenceByDay}
@@ -174,8 +174,11 @@ const $detailText: TextStyle = {
 }
 
 const $empty: TextStyle = {
+  position: "absolute",
+  alignSelf: "center",
   textAlign: "center",
   textAlignVertical: "center",
+  height: "100%",
   fontSize: 18
 }
 
