@@ -143,6 +143,7 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
   
   return (
     <SafeAreaView style={$root} mode="margin">
+      <Text style={$header}>STATISTICS</Text>
       {
         emissionStore.nonRecurringEmissionLength === 0 ? 
           <Text style={$empty}>No emissions recorded 🍃</Text> :

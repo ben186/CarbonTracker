@@ -13,7 +13,8 @@ export const AboutScreen: FC<AboutScreenProp> = observer(function AboutScreen() 
   return (
     <SafeAreaView style={$root} mode="margin">
       <ScrollView>
-        <Text style={$header}>ABOUT</Text>
+      <Text style={$header}>ABOUT</Text>
+      <ScrollView>
         <Text style={$about}>{ABOUT}</Text>
       </ScrollView>
     </SafeAreaView>
