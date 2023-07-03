@@ -8,7 +8,7 @@ import { BarChart, PieChart } from "echarts/charts"
 import type { EChartsOption } from "echarts"
 import type { ECharts } from "echarts/core"
 import { GridComponent, LegendComponent } from "echarts/components"
-import { Emission, useStores } from "app/models"
+import { useStores } from "app/models"
 import { getDay } from "date-fns"
 import { EMISSION, EMISSIONS } from "app/constants"
 import { colors } from "app/theme"
@@ -123,7 +123,7 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
   }, [pieOption])
 
   const renderPercentageItem = (e: EMISSION) => (
-    <View style={$category}>
+    <View key={e.category} style={$category}>
       <Ionicons style={$icon} name={e.icon} size={32} />
       <View style={$emissionPercentageLabelContainer}>
         <Text style={$emissionPercentageLabel}>{e.category.charAt(0).toUpperCase() + e.category.slice(1)}</Text>
@@ -160,7 +160,7 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
       <Text style={$header}>STATISTICS</Text>
       {
         emissionStore.nonRecurringEmissionLength === 0 ? 
-          <Text style={$empty}>No emissions recorded 🍃</Text> :
+          <Text style={$empty}>No data available</Text> :
           renderChart()
       }
     </SafeAreaView>

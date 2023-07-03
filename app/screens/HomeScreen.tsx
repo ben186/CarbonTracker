@@ -73,7 +73,7 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen({ na
         <Text style={$unitText}>kg CO2e</Text>
         <Text style={$detailText}>{"Press to see breakdown >"}</Text>
       </Pressable>
-      {emissionStore.nonRecurringEmissionLength === 0 && <Text style={$empty}>{"🍃\nNo emissions added yet..."}</Text>}
+      {emissionStore.nonRecurringEmissionLength === 0 && <Text style={$empty}>{"No emissions added yet..."}</Text>}
       <SectionList
         style={$list}
         sections={emissionStore.listNonRecurrenceByDay}
