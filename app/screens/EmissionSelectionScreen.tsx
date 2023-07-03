@@ -1,6 +1,6 @@
 import React, { FC } from "react"
 import { observer } from "mobx-react-lite"
-import { Text, ViewStyle, View, Pressable, TextStyle } from "react-native"
+import { Text, ViewStyle, View, TouchableOpacity, TextStyle } from "react-native"
 import { HomeNavigatorScreenProps } from "app/navigators"
 import { Ionicons } from "@expo/vector-icons"
 import { colors } from "app/theme"
@@ -14,14 +14,16 @@ export const EmissionSelectionScreen: FC<EmissionSelectionScreenProps> = observe
     <View style={$root}>
       <View style={$list}>
           {EMISSIONS.map(c => (
-            <Pressable 
+            <TouchableOpacity 
               onPress={() => navigation.navigate("AddEmission", { category: c.category.toLocaleLowerCase() })}
-              style={$category}
+              style={$categoryContainer}
               key={c.category}
             >
-              <Ionicons style={$icon} name={c.icon} size={32} />
-              <Text style={$label}>{c.category.charAt(0).toUpperCase() + c.category.slice(1)}</Text>
-            </Pressable>
+              <View style={$category}>
+                <Ionicons style={$icon} name={c.icon} size={32} />
+                <Text style={$label}>{c.category.charAt(0).toUpperCase() + c.category.slice(1)}</Text>
+              </View>
+            </TouchableOpacity>
           ))}
         </View>
     </View>
@@ -29,14 +31,14 @@ export const EmissionSelectionScreen: FC<EmissionSelectionScreenProps> = observe
 })
 
 const $root: ViewStyle = {
-  flex: 1
+  flex: 1,
+  paddingHorizontal: "2%"
 }
 
 const $list: ViewStyle = {
-  flex: 1,
   flexDirection: "column",
-  flexWrap: "wrap",
-  alignContent: "center"
+  alignContent: "center",
+  justifyContent: "space-around"
 }
 
 const $icon: ViewStyle = {
@@ -45,16 +47,18 @@ const $icon: ViewStyle = {
 
 const $label: TextStyle = {
   fontSize: 18, 
-  fontWeight: "bold"
+  fontWeight: "bold",
+  textAlignVertical: "center"
+}
+
+const $categoryContainer: ViewStyle = {
+  justifyContent: "center",
+  backgroundColor: colors.palette.neutral100,
+  marginTop: 20,
+  elevation: 4,
+  height: 70
 }
 
 const $category: ViewStyle = {
-  marginTop: 20,
-  height: "10%",
-  width: "95%",
-  flexDirection: "row",
-  backgroundColor: "#ffffff",
-  alignItems: "center",
-  elevation: 4,
-  zIndex: 1
+  flexDirection: "row"
 }
