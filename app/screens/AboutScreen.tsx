@@ -12,7 +12,6 @@ const ABOUT = "With the power of personal Carbon Tracker, you can effortlessly m
 export const AboutScreen: FC<AboutScreenProp> = observer(function AboutScreen() {
   return (
     <SafeAreaView style={$root} mode="margin">
-      <ScrollView>
       <Text style={$header}>ABOUT</Text>
       <ScrollView>
         <Text style={$about}>{ABOUT}</Text>

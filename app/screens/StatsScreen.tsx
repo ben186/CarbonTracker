@@ -8,11 +8,12 @@ import { BarChart, PieChart } from "echarts/charts"
 import type { EChartsOption } from "echarts"
 import type { ECharts } from "echarts/core"
 import { GridComponent, LegendComponent } from "echarts/components"
-import { useStores } from "app/models"
+import { Emission, useStores } from "app/models"
 import { getDay } from "date-fns"
-import { EMISSIONS } from "app/constants"
+import { EMISSION, EMISSIONS } from "app/constants"
 import { colors } from "app/theme"
 import { SafeAreaView } from "react-native-safe-area-context"
+import { Ionicons } from "@expo/vector-icons"
 
 echarts.use([SVGRenderer, BarChart, PieChart, GridComponent, LegendComponent])
 
@@ -72,7 +73,7 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
     const emissionIndex = EMISSIONS.findIndex(x => x.category === emission.emissionType)
     barData[emissionIndex][day] += totalEmission
 
-    pieData[emission.emissionType] = pieData[emission.emissionType] ?? 0 + totalEmission
+    pieData[emission.emissionType] = (pieData[emission.emissionType] ?? 0) + totalEmission
   })
 
   // Assign chart data
@@ -121,19 +122,32 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
     return () => chart?.dispose()
   }, [pieOption])
 
+  const renderPercentageItem = (e: EMISSION) => (
+    <View style={$category}>
+      <Ionicons style={$icon} name={e.icon} size={32} />
+      <View style={$emissionPercentageLabelContainer}>
+        <Text style={$emissionPercentageLabel}>{e.category.charAt(0).toUpperCase() + e.category.slice(1)}</Text>
+        <Text style={$percentageLabel}>{((pieData[e.category] ?? 0) / emissionStore.totalEmission * 100).toFixed(0) + "%"}</Text>
+      </View>
+    </View>
+  )
+
   const renderChart = () => (
     <ScrollView>
-      <Text style={$header}>STATISTICS</Text>
+      <View style={$chartContainer}>
+        <Text style={$label}>Category Overview</Text>
+        <View style={$chart}>
+          <SkiaChart ref={pieRef} />
+        </View>
+      </View>
+      <View style={$chartContainer}>
+        <Text style={$label}>Emission Percentage</Text>
+        { EMISSIONS.map(e => renderPercentageItem(e)) }
+      </View>
       <View style={$chartContainer}>
         <Text style={$label}>Emission Overview</Text>
         <View style={[$chart, $barChart]}>
           <SkiaChart ref={barRef} />
-        </View>
-      </View>
-      <View style={$chartContainer}>
-        <Text style={$label}>Category Count</Text>
-        <View style={$chart}>
-          <SkiaChart ref={pieRef} />
         </View>
       </View>
       {/* Have to add empty component for elevation to work for some reason */ }
@@ -175,10 +189,45 @@ const $header: TextStyle = {
   paddingVertical: "2%"
 }
 
+const $icon: ViewStyle = {
+  marginHorizontal: 20
+}
+
+const $category: ViewStyle = {
+  flexDirection: "row",
+  paddingVertical: "1.5%",
+  marginRight: "2%"
+}
+
+const $emissionPercentageLabelContainer: ViewStyle = {
+  flex: 1,
+  flexDirection: "row",
+  justifyContent: "space-between"
+}
+
+const $emissionPercentageLabel: TextStyle = {
+  fontSize: 15,
+  fontWeight: "500",
+  textAlignVertical: "center"
+}
+
+const $percentageLabel: TextStyle = {
+  backgroundColor: colors.tint,
+  color: colors.palette.primary100,
+  fontWeight: "500",
+  height: 30,
+  width: 55,
+  borderRadius: 3,
+  textAlign: "center",
+  textAlignVertical: "center",
+  alignSelf: "center",
+  paddingHorizontal: "1%"
+}
+
 const $chartContainer: ViewStyle = {
   alignSelf: "center",
   width: "100%",
-  marginTop: "1.5%",
+  marginTop: "2%",
   backgroundColor: colors.palette.neutral100,
   elevation: 4
 }

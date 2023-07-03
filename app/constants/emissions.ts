@@ -1,12 +1,13 @@
 import { Ionicons } from "@expo/vector-icons";
 
-export const EMISSIONS: 
-    { 
-        category: string, 
-        factor: number, 
-        unit: string, 
-        icon: keyof typeof Ionicons.glyphMap
-    }[] 
+export type EMISSION = {
+    category: string, 
+    factor: number, 
+    unit: string, 
+    icon: keyof typeof Ionicons.glyphMap
+}
+
+export const EMISSIONS: EMISSION[]
     = [
         { category: "car", factor: 24, unit: "km", icon: "car-sport-outline" },
         { category: "electricity", factor: 11, unit: "kW", icon: "bulb-outline" },
