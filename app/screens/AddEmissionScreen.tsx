@@ -134,7 +134,7 @@ export const AddEmissionScreen: FC<AddEmissionScreenProps> = observer(function A
           <Text style={$inputText} onPress={pickDate}>{date.toISOString().slice(0, 10)}</Text>
         </View>
         <View style={$inputView}>
-          <Text style={$text}>{ category ? "Emission Quantity (" + EMISSIONS.find(v => v.category === category).unit +")" : "Emission Quantity" }</Text>
+          <Text style={$text}>{ category ? "Emission Quantity [" + EMISSIONS.find(v => v.category === category).unit + "]" : "Emission Quantity" }</Text>
           <TextInput
             style={[$inputText, isValidInput ? {} : $invalidInputText]}
             onChangeText={setEmissionQuantity}
@@ -172,7 +172,7 @@ export const AddEmissionScreen: FC<AddEmissionScreenProps> = observer(function A
           <Text style={$displayText}>{EMISSIONS.find(v => v.category === category)?.factor}</Text>
         </View>
         <View style={$inputView}>
-          <Text style={$text}>Total Emission (gCO2e)</Text>
+          <Text style={$text}>Total Emission [kg CO2e]</Text>
           <Text style={$displayText}>{!isValidInput ? "-" : totalEmission.toLocaleString(undefined, { maximumFractionDigits: 2 })}</Text>
         </View>
       </View>
