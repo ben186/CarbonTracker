@@ -41,7 +41,7 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
     yAxis: {
       type: "value",
       axisLabel: {
-        formatter: (value) => value === 0 ? "0" : (value / 1000).toString()
+        formatter: (value) => value === 0 ? "0" : value.toString()
       },
       name: "kg CO2e",
       show: true

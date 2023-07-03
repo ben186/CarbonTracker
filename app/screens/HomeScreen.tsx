@@ -36,23 +36,23 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen({ na
   // emissionStore.setProp("emissions", [])
 
   // Add random emissions
-  // if (emissionStore.emissions.length < 10) {
-  //   for (let i = 0; i < 100; i++) {
-  //     emissionStore.addEmission(EmissionModel.create({
-  //       id: Crypto.randomUUID(),
-  //       timestamp: getRandomDate(new Date('2023-5-01T01:57:45.271Z'), new Date()).valueOf(),
-  //       emissionType: EMISSIONS.map(x => x.category)[Math.floor(Math.random() * 4)],
-  //       emission: Math.floor(Math.random() * (2000 - 2 + 1) + 2)
-  //     }))
-  //   }
-  // } 
+  if (emissionStore.emissions.length < 10) {
+    for (let i = 0; i < 100; i++) {
+      emissionStore.addEmission(EmissionModel.create({
+        id: Crypto.randomUUID(),
+        timestamp: getRandomDate(new Date('2023-5-01T01:57:45.271Z'), new Date()).valueOf(),
+        emissionType: EMISSIONS.map(x => x.category)[Math.floor(Math.random() * 4)],
+        emission: Math.floor(Math.random() * (100 - 2 + 1) + 2)
+      }))
+    }
+  } 
   
   const renderItem = ({item}: {item: Emission}) => (
     <TouchableOpacity onPress={() => navigation.navigate("AddEmission", { id: item.id })} style={$item}>
       <Ionicons style={$iconStyle} name={EMISSIONS.find(c => c.category === item.emissionType).icon} size={32} />
       <View style={$label}>
         <Text style={$text}>{item.emissionType.toUpperCase()}</Text>
-        <Text>{(item.emission * EMISSIONS.find(c => c.category === item.emissionType).factor).toLocaleString() + " gCO2e"}</Text>
+        <Text>{(item.emission * EMISSIONS.find(c => c.category === item.emissionType).factor).toLocaleString() + " kg CO2e"}</Text>
       </View>
     </TouchableOpacity>
   )
@@ -69,7 +69,7 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen({ na
       <Text style={$header}>HOME</Text>
       <Pressable onPress={() => appBottomTabNavigator.navigate("StatsNavigator")} style={$totalEmissionContainer}>
         <Text style={$labelText}>Your total emission:</Text>
-        <Text style={$numberText}>{emissionStore.totalEmission === 0 ? 0 : (emissionStore.totalEmission / 1000).toFixed(3)}</Text>
+        <Text style={$numberText}>{emissionStore.totalEmission === 0 ? 0 : (emissionStore.totalEmission).toLocaleString()}</Text>
         <Text style={$unitText}>kg CO2e</Text>
         <Text style={$detailText}>{"Press to see breakdown >"}</Text>
       </Pressable>
