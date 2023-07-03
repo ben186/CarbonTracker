@@ -26,6 +26,7 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
   // Be careful that we must use .fill().map() to avoid array of references when compared to use .fill() only
   const barData: Array<Array<number>> = new Array(EMISSIONS.length).fill(0).map(_ => new Array(DAY.length).fill(0))
   const barOption: EChartsOption = {
+    color: ["#56b83d", "#2E8A7B", "#DB8448", "#D24656"],
     grid: {
       left: "center",
       containLabel: true
@@ -51,6 +52,7 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
   const pieRef = useRef<HTMLElement | null>(null)
   const pieData : Map<string, number> = new Map()
   const pieOption: EChartsOption = {
+    color: ["#56b83d", "#2E8A7B", "#DB8448", "#D24656"],
     series: [
       {
         type: "pie",
