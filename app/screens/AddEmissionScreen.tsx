@@ -179,7 +179,7 @@ export const AddEmissionScreen: FC<AddEmissionScreenProps> = observer(function A
         </View>
         <View style={$inputView}>
           <Text style={$text}>Total Emission [kg CO2e]</Text>
-          <Text style={$displayText}>{!isValidInput ? "-" : totalEmission.toLocaleString(undefined, { maximumFractionDigits: 2 })}</Text>
+          <Text style={$displayEmissionText}>🔥 {!isValidInput ? "-" : totalEmission.toLocaleString(undefined, { maximumFractionDigits: 3 })}</Text>
         </View>
       </View>
       { route.params.id && renderSaveAndDeleteButtons() }
@@ -208,7 +208,7 @@ const $text: TextStyle = {
 
 const $inputText: TextStyle = {
   borderBottomWidth: 1,
-  borderColor: colors.palette.primary600,
+  borderColor: colors.textDim,
   marginTop: "2%",
   fontSize: 20,
   color: colors.textDim
@@ -224,7 +224,7 @@ const $error: TextStyle = {
 
 const $dropdownStyle: ViewStyle = {
   borderBottomWidth: 1,
-  borderColor: colors.palette.primary600
+  borderColor: colors.textDim
 }
 
 const $itemText: TextStyle = {
@@ -236,6 +236,13 @@ const $displayText: TextStyle = {
   marginTop: "1.5%",
   fontSize: 20,
   color: colors.textDim
+}
+
+const $displayEmissionText: TextStyle = {
+  marginTop: "1.5%",
+  fontSize: 20,
+  fontWeight: "bold",
+  color: colors.error
 }
 
 const $saveAndDeleteButtons: ViewStyle = {
