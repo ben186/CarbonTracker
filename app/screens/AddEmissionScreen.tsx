@@ -27,7 +27,7 @@ export const AddEmissionScreen: FC<AddEmissionScreenProps> = observer(function A
 
     category = initialRecord?.emissionType
     initialEmission = initialRecord?.emission.toString()
-    initialDate = new Date(initialRecord?.timestamp ?? 0)
+    initialDate = new Date((initialRecord?.recurrence?.nextOccurence ?? initialRecord?.timestamp) ?? 0)
     initialRecurrenceInterval = initialRecord?.recurrence?.frequency ?? "none"
   }
 
@@ -81,9 +81,21 @@ export const AddEmissionScreen: FC<AddEmissionScreenProps> = observer(function A
       id: currentEmission.id,
       timestamp: date.valueOf(),
       emissionType: currentEmission.emissionType,
-      emission: Number.parseFloat(emissionQuantity)
+      emission: Number.parseFloat(emissionQuantity),
+      recurrence:
+        recurrenceInterval === "none" ? 
+          undefined : 
+          {
+            frequency: recurrenceInterval as "daily" | "weekly" | "monthly",
+            nextOccurence: date.valueOf()
+          }
     })
     emissionStore.updateEmission(updatedEmission)
+
+    // Immediately update to add any possible entry 
+    if (recurrenceInterval !== "none") {
+      emissionStore.checkAndUpdateRecurringEmission()
+    }
 
     navigation.goBack()
   }
@@ -136,22 +148,6 @@ export const AddEmissionScreen: FC<AddEmissionScreenProps> = observer(function A
     <ScrollView contentContainerStyle={$root} keyboardShouldPersistTaps={"handled"} scrollEnabled={false}>
       <View>
         <View style={$inputView}>
-          <Text style={$text}>Date</Text>
-          <Text style={$inputText} onPress={pickDate}>{date.toISOString().slice(0, 10)}</Text>
-        </View>
-        <View style={$inputView}>
-          <Text style={$text}>{ category ? "Emission Quantity [" + EMISSIONS.find(v => v.category === category).unit + "]" : "Emission Quantity" }</Text>
-          <TextInput
-            style={[$inputText, isValidInput ? {} : $invalidInputText]}
-            onChangeText={setEmissionQuantity}
-            value={emissionQuantity}
-            placeholder="Input your emission quantity..."
-            placeholderTextColor={colors.textDim}
-            keyboardType="numeric"
-          />
-          {!isValidInput && <Text style={$error}>ⓘ Please input a valid and positive number</Text>}
-        </View>
-        <View style={$inputView}>
           <Text style={$text}>Recurring</Text>
           <Dropdown
             itemTextStyle={$itemText}
@@ -168,6 +164,22 @@ export const AddEmissionScreen: FC<AddEmissionScreenProps> = observer(function A
             value={recurrenceInterval}
             onChange={item => setRecurrenceInterval(item.value)}   
           />
+        </View>
+        <View style={$inputView}>
+          <Text style={$text}>{recurrenceInterval === "none" ? "Date" : "Recurring Date"}</Text>
+          <Text style={$inputText} onPress={pickDate}>{date.toISOString().slice(0, 10)}</Text>
+        </View>
+        <View style={$inputView}>
+          <Text style={$text}>{ category ? "Emission Quantity [" + EMISSIONS.find(v => v.category === category).unit + "]" : "Emission Quantity" }</Text>
+          <TextInput
+            style={[$inputText, isValidInput ? {} : $invalidInputText]}
+            onChangeText={setEmissionQuantity}
+            value={emissionQuantity}
+            placeholder="Input your emission quantity..."
+            placeholderTextColor={colors.textDim}
+            keyboardType="numeric"
+          />
+          {!isValidInput && <Text style={$error}>ⓘ Please input a valid and positive number</Text>}
         </View>
         <View style={$inputView}>
           <Text style={$text}>Emission Type</Text>
