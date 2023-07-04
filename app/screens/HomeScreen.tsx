@@ -71,7 +71,7 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen({ na
         <Text style={$labelText}>Your total emission:</Text>
         <Text style={$numberText}>{emissionStore.totalEmission === 0 ? 0 : (emissionStore.totalEmission).toLocaleString()}</Text>
         <Text style={$unitText}>kg CO2e</Text>
-        <Text style={$detailText}>{"Press to see breakdown >"}</Text>
+        <Text style={$detailText}>{"Tap to see breakdown >"}</Text>
       </Pressable>
       {emissionStore.nonRecurringEmissionLength === 0 && <Text style={$empty}>{"No emissions added yet..."}</Text>}
       <SectionList
