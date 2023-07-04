@@ -4,9 +4,9 @@
  * Generally speaking, it will contain an auth flow (registration, login, forgot password)
  * and a "main" flow which the user will use once logged in.
  */
-import { NavigationContainer } from "@react-navigation/native"
+import { NavigationContainer, useFocusEffect } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
-import React from "react"
+import React, { useCallback } from "react"
 import { Ionicons } from "@expo/vector-icons"
 import Config from "../config"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
@@ -15,6 +15,7 @@ import { HomeNavigator } from "./HomeNavigator"
 import { StatsNavigator } from "./StatsNavigator"
 import { AboutScreen } from "app/screens"
 import { colors } from "app/theme"
+import { setStatusBarBackgroundColor, setStatusBarStyle, setStatusBarTranslucent } from "expo-status-bar"
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -53,13 +54,13 @@ const AppBottomTab = observer(function AppBottomTab() {
 
   // Force light mode for now
   // TODO: Check if the theme can replaced the code below (Optional)
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     setStatusBarStyle("dark")
-  //     setStatusBarBackgroundColor("white", true)
-  //     setStatusBarTranslucent(true)
-  //   }, [])
-  // )
+  useFocusEffect(
+    useCallback(() => {
+      setStatusBarStyle("dark")
+      setStatusBarTranslucent(true) // !!!
+      setStatusBarBackgroundColor(colors.transparent, true)
+    }, [])
+  )
 
   return (
     <Tab.Navigator screenOptions={{ headerShown: false, tabBarShowLabel: true }}>
@@ -112,8 +113,8 @@ const THEME = {
       background: colors.background,
       card: colors.palette.neutral100,
       text: colors.text,
-      border: colors.border,
-      notification: colors.tint
+      border: colors.palette.neutral200,
+      notification: colors.tint // Not sure what this is
   }
 }
 
