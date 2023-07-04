@@ -18,7 +18,8 @@ export const RecurringEmissionScreen: FC<RecurringEmissionScreenProps> = observe
       <View style={$label}>
         <View>
           <Text style={$text}>{item.emissionType.toUpperCase()}</Text>
-          <Text>{(item.emission * EMISSIONS.find(c => c.category === item.emissionType).factor).toLocaleString() + " gCO2e"}</Text>
+          <Text>{(item.emission * EMISSIONS.find(c => c.category === item.emissionType).factor).toLocaleString() + " kg CO2e"}</Text>
+          <Text style={$nextEmissionText}>Due: {new Date(item.recurrence.nextOccurence).toLocaleDateString()}</Text>
         </View>
         <Text style={$recurringLabel}>{item.recurrence.frequency.charAt(0).toUpperCase() + item.recurrence.frequency.slice(1)}</Text>
       </View>
@@ -78,6 +79,10 @@ const $item: ViewStyle = {
 
 const $text: TextStyle = {
   fontWeight: "bold",
+}
+
+const $nextEmissionText: TextStyle = {
+  color: colors.textDim
 }
 
 const $label: ViewStyle = {
