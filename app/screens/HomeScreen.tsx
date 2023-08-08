@@ -144,7 +144,8 @@ const $totalEmissionContainer: ViewStyle = {
   marginTop: "1%",
   paddingHorizontal: "2%",
   borderRadius: 3,
-  backgroundColor: colors.palette.primary700
+  backgroundColor: colors.palette.primary700,
+  zIndex: 0.5
 }
 
 const $labelText: TextStyle = {
