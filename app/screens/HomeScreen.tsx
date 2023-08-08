@@ -82,7 +82,7 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen({ na
       />
       <MotiPressable 
         style={$recurringEmission} 
-        onPress={() => navigation.navigate("RecurringEmission")}
+        onPressIn={() => navigation.navigate("RecurringEmission")}
         animate={
           useMemo(() => ({ pressed }) => {  
             "worklet"
@@ -100,8 +100,8 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen({ na
         <Ionicons style={$recurringEmissionIcon} name="timer-outline" color={"white"} size={36} />
       </MotiPressable>
       <MotiPressable 
-        style={$addEmission} 
-        onPress={() => navigation.navigate("EmissionSelection")}
+        style={$addEmission}
+        onPressIn={() => navigation.navigate("EmissionSelection")}
         animate={
           useMemo(() => ({ pressed }) => {  
             "worklet"
