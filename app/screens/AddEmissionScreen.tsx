@@ -145,8 +145,8 @@ export const AddEmissionScreen: FC<AddEmissionScreenProps> = observer(function A
   }
 
   return (
-    <ScrollView contentContainerStyle={$root} keyboardShouldPersistTaps={"handled"} scrollEnabled={false}>
-      <View>
+    <View style={$root}>
+      <ScrollView style={$scrollRoot} keyboardShouldPersistTaps={"handled"}>
         <View style={$inputView}>
           <Text style={$text}>Recurring</Text>
           <Dropdown
@@ -193,19 +193,20 @@ export const AddEmissionScreen: FC<AddEmissionScreenProps> = observer(function A
           <Text style={$text}>Total Emission [kg CO2e]</Text>
           <Text style={$displayEmissionText}>🔥 {!isValidInput ? "-" : totalEmission.toLocaleString(undefined, { maximumFractionDigits: 3 })}</Text>
         </View>
-      </View>
-      { route.params.id && renderSaveAndDeleteButtons() }
-      { !route.params.id && <Button disabled={!isValidInput} style={$recordButton} onPress={submitEmission}>Record Emission</Button>}
-    </ScrollView>
+        { route.params.id && renderSaveAndDeleteButtons() }
+        { !route.params.id && <Button disabled={!isValidInput} style={$recordButton} onPress={submitEmission}>Record Emission</Button>}
+      </ScrollView>
+    </View>
   )
 })
 
 const $root: ViewStyle = {
   flex: 1,
   flexDirection: "column",
-  justifyContent: "space-between",
-  paddingHorizontal: "3.5%",
-  backgroundColor: colors.background
+  justifyContent: "space-between"}
+
+const $scrollRoot: ViewStyle = {
+  paddingHorizontal: "3.5%"
 }
 
 const $inputView: ViewStyle = {
@@ -270,7 +271,7 @@ const $saveButton: ViewStyle = {
 const $recordButton: ViewStyle = {
   bottom: 0,
   width: "100%",
-  marginBottom: "4%"
+  marginBottom: "2.5%"
 }
 
 const $deleteEmissionText: TextStyle = {
@@ -282,6 +283,6 @@ const $deleteEmission: ViewStyle = {
   bottom: 0,
   width: "100%",
   marginTop: "1%",
-  marginBottom: "4%",
+  marginBottom: "2.5%",
   backgroundColor: "red"
 }
