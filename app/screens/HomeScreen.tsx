@@ -33,7 +33,7 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen({ na
 
   const { emissionStore } = useStores()
 
-  emissionStore.setProp("emissions", [])
+  // emissionStore.setProp("emissions", [])
 
   // Add random emissions
   // if (emissionStore.emissions.length < 10) {
