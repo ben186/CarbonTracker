@@ -71,7 +71,7 @@ export const StatsScreen: FC<StatsScreenProps> = observer(function StatsScreen()
     const totalEmission = emission.emission * EMISSIONS.find(e => e.category === emission.emissionType).factor
 
     // Originally starts with Sunday and shifted to Monday as starting day of the week
-    const day = (getDay(new Date(emission.timestamp)) + 1) % 7
+    const day = (getDay(new Date(emission.timestamp)) + 6) % 7 
     const emissionIndex = EMISSIONS.findIndex(x => x.category === emission.emissionType)
     barData[emissionIndex][day] += totalEmission
 
