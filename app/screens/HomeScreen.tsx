@@ -33,7 +33,7 @@ export const HomeScreen: FC<HomeScreenProps> = observer(function HomeScreen({ na
 
   const { emissionStore } = useStores()
 
-  // emissionStore.setProp("emissions", [])
+  emissionStore.setProp("emissions", [])
 
   // Add random emissions
   // if (emissionStore.emissions.length < 10) {
@@ -214,7 +214,8 @@ const $sectionHeaderDayText: TextStyle = {
 const $list: ViewStyle = {
   flex: 1,
   alignSelf: "stretch",
-  paddingTop: "1%"
+  paddingTop: "1%",
+  marginBottom: "1%"
 }
 
 const $iconStyle: ViewStyle = {
